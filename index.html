@@ -1,10 +1,460 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>コウマルAI</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:sans-serif;
+}
+
+body{
+background:#f3f4f6;
+display:flex;
+height:100vh;
+}
+
+/* サイドバー */
+
+.sidebar{
+width:260px;
+background:#111827;
+color:white;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+margin-bottom:30px;
+}
+
+.menu button{
+width:100%;
+padding:15px;
+margin-bottom:10px;
+border:none;
+border-radius:10px;
+background:#1f2937;
+color:white;
+font-size:16px;
+cursor:pointer;
+text-align:left;
+}
+
+.menu button:hover{
+background:#374151;
+}
+
+/* メイン */
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+/* ヘッダー */
+
+.header{
+height:70px;
+background:white;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 20px;
+border-bottom:1px solid #ddd;
+}
+
+.header h1{
+font-size:24px;
+}
+
+.top-buttons button{
+padding:10px 15px;
+border:none;
+border-radius:10px;
+margin-left:10px;
+cursor:pointer;
+background:#2563eb;
+color:white;
+}
+
+/* チャット */
+
+.chat-area{
+flex:1;
+padding:20px;
+overflow-y:auto;
+}
+
+.message{
+max-width:70%;
+padding:15px;
+border-radius:15px;
+margin-bottom:15px;
+line-height:1.5;
+}
+
+.user{
+background:#2563eb;
+color:white;
+margin-left:auto;
+}
+
+.ai{
+background:white;
+color:black;
+box-shadow:0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* 入力欄 */
+
+.input-area{
+display:flex;
+padding:20px;
+background:white;
+border-top:1px solid #ddd;
+}
+
+.input-area input{
+flex:1;
+padding:15px;
+border-radius:12px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+.input-area button{
+margin-left:10px;
+padding:15px 20px;
+border:none;
+border-radius:12px;
+background:#10b981;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+canvas{
+background:white;
+border-radius:10px;
+margin-top:20px;
+}
+
+@media(max-width:700px){
+
+.sidebar{
+display:none;
+}
+
+}
+
+</style>
 </head>
+
 <body>
+
+<!-- サイドバー -->
+
+<div class="sidebar">
+
+<div class="logo">
+🌙 コウマルAI
+</div>
+
+<div class="menu">
+<button>💬 AIチャット</button>
+<button onclick="showNews()">📰 ニュース</button>
+<button onclick="drawArt()">🎨 画像生成</button>
+<button onclick="studyAI()">📚 勉強AI</button>
+<button onclick="storyAI()">📖 ストーリー</button>
+<button onclick="voiceAI()">🔊 音声AI</button>
+<button onclick="robotAI()">🤖 ロボット</button>
+</div>
+
+</div>
+
+<!-- メイン -->
+
+<div class="main">
+
+<div class="header">
+
 <h1>🌙 コウマルAI</h1>
-<p>AIサイト完成！</p>
+
+<div class="top-buttons">
+<button onclick="shareSite()">共有</button>
+<button onclick="settingsAI()">設定</button>
+</div>
+
+</div>
+
+<!-- チャット -->
+
+<div class="chat-area" id="chatArea">
+
+<div class="message ai">
+こんにちは！コウマルAIへようこそ！
+</div>
+
+</div>
+
+<!-- 入力 -->
+
+<div class="input-area">
+
+<input
+type="text"
+id="userInput"
+placeholder="メッセージを入力">
+
+<button onclick="sendMessage()">
+送信
+</button>
+
+</div>
+
+</div>
+
+<script>
+
+function sendMessage(){
+
+let input =
+document.getElementById("userInput");
+
+let text = input.value;
+
+if(text.trim() === ""){
+return;
+}
+
+let chat =
+document.getElementById("chatArea");
+
+/* ユーザー */
+
+let userMsg =
+document.createElement("div");
+
+userMsg.className =
+"message user";
+
+userMsg.innerText = text;
+
+chat.appendChild(userMsg);
+
+/* AI返信 */
+
+let aiText = "";
+
+if(text.includes("こんにちは")){
+
+aiText = "こんにちは！";
+
+}
+
+else if(text.includes("ニュース")){
+
+aiText = "宇宙ニュースを表示します！";
+
+}
+
+else if(text.includes("絵")){
+
+aiText = "画像生成を起動します！";
+
+}
+
+else if(text.includes("勉強")){
+
+aiText = "宿題を手伝うよ！";
+
+}
+
+else{
+
+aiText = "もっと話して！";
+
+}
+
+let aiMsg =
+document.createElement("div");
+
+aiMsg.className =
+"message ai";
+
+aiMsg.innerText =
+aiText;
+
+chat.appendChild(aiMsg);
+
+input.value = "";
+
+chat.scrollTop =
+chat.scrollHeight;
+
+}
+
+/* ニュース */
+
+function showNews(){
+
+alert(
+"📰 AIニュース\n🚀 宇宙ニュース\n🎮 ゲームニュース"
+);
+
+}
+
+/* 勉強AI */
+
+function studyAI(){
+
+alert(
+"📚 問題: 12 + 18 は？"
+);
+
+}
+
+/* ストーリー */
+
+function storyAI(){
+
+alert(
+"📖 コウマル星でウサギたちが冒険していました..."
+);
+
+}
+
+/* 音声 */
+
+function voiceAI(){
+
+let speech =
+new SpeechSynthesisUtterance(
+"こんにちは！コウマルAIです！"
+);
+
+speech.lang = "ja-JP";
+
+speechSynthesis.speak(speech);
+
+}
+
+/* ロボット */
+
+function robotAI(){
+
+alert(
+"🤖 ロボットが動きました！"
+);
+
+}
+
+/* 共有 */
+
+function shareSite(){
+
+alert(
+"🔗 サイトを共有できます！"
+);
+
+}
+
+/* 設定 */
+
+function settingsAI(){
+
+alert(
+"⚙ 設定画面"
+);
+
+}
+
+/* お絵描き */
+
+function drawArt(){
+
+let canvas =
+document.createElement("canvas");
+
+canvas.width = 300;
+canvas.height = 200;
+
+document
+.getElementById("chatArea")
+.appendChild(canvas);
+
+let ctx =
+canvas.getContext("2d");
+
+ctx.fillStyle = "black";
+
+ctx.fillRect(0,0,300,200);
+
+ctx.fillStyle = "yellow";
+
+ctx.beginPath();
+
+ctx.arc(
+150,
+100,
+50,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+
+ctx.fillStyle = "white";
+
+for(let i=0;i<30;i++){
+
+ctx.fillRect(
+Math.random()*300,
+Math.random()*200,
+3,
+3
+);
+
+}
+
+}
+
+</script>
+
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
