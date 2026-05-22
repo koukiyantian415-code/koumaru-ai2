@@ -3,201 +3,493 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>コウマルAI</title>
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:sans-serif;
-}
-
 body{
+margin:0;
+font-family:sans-serif;
 background:black;
-overflow:hidden;
 color:white;
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
+overflow:hidden;
 }
 
-/* 星空 */
-.stars{
-position:absolute;
-width:100%;
-height:100%;
-background:url("https://i.imgur.com/YKY28eT.png");
-animation:moveStars 60s linear infinite;
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
 }
 
-@keyframes moveStars{
-from{
-transform:translateY(0);
-}
-to{
-transform:translateY(-1000px);
-}
-}
-
-/* メイン */
-.main{
-position:relative;
-z-index:2;
+.container{
+padding:30px;
 text-align:center;
-background:rgba(0,0,0,0.6);
-padding:40px;
-border-radius:20px;
-backdrop-filter:blur(10px);
-box-shadow:0 0 30px cyan;
 }
 
 h1{
-font-size:60px;
-margin-bottom:10px;
+font-size:50px;
 color:cyan;
 text-shadow:0 0 20px cyan;
 }
 
-p{
-font-size:20px;
-margin-bottom:20px;
-}
-
-/* ボタン */
-button{
-padding:15px 30px;
-font-size:20px;
-border:none;
-border-radius:10px;
-background:cyan;
-color:black;
-cursor:pointer;
-transition:0.3s;
-font-weight:bold;
-}
-
-button:hover{
-transform:scale(1.1);
-background:white;
-}
-
-/* ウサギ */
-.rabbit{
-font-size:80px;
-animation:float 3s ease-in-out infinite;
-margin-bottom:20px;
-}
-
-@keyframes float{
-0%{
-transform:translateY(0);
-}
-50%{
-transform:translateY(-20px);
-}
-100%{
-transform:translateY(0);
-}
-}
-
-/* AIチャット */
-.chat{
-margin-top:20px;
-background:#111;
-padding:15px;
-border-radius:10px;
-width:300px;
-margin-left:auto;
-margin-right:auto;
+.chat-box{
+margin-top:30px;
 }
 
 input{
-width:100%;
-padding:10px;
-margin-top:10px;
+padding:15px;
+width:300px;
 border:none;
-border-radius:5px;
+border-radius:10px;
+font-size:18px;
 }
 
-.chatText{
-margin-top:10px;
-color:lime;
+button{
+padding:15px 25px;
+border:none;
+border-radius:10px;
+background:cyan;
+font-size:18px;
+cursor:pointer;
+margin-left:10px;
 }
 
-/* スマホ */
-@media(max-width:600px){
-
-h1{
-font-size:40px;
+#response{
+margin-top:20px;
+font-size:25px;
+color:yellow;
 }
 
-.main{
-width:90%;
+.card{
+margin-top:30px;
 padding:20px;
+background:rgba(255,255,255,0.1);
+border-radius:20px;
+backdrop-filter:blur(5px);
 }
 
-}
 </style>
 </head>
 
 <body>
 
-<div class="stars"></div>
+<canvas id="stars"></canvas>
 
-<div class="main">
+<div class="container">
 
-<div class="rabbit">🐰🚀</div>
+<h1>🌙 コウマルAI 🌙</h1>
 
-<h1>コウマルAI</h1>
+<p>未来のAIサイト</p>
 
-<p>宇宙最強AIシステム</p>
+<div class="chat-box">
+<input id="userInput" placeholder="話しかけて！">
+<button onclick="talk()">送信</button>
 
-<button onclick="hello()">起動</button>
+<div id="response"></div>
+</div>
 
-<div class="chat">
+<div class="card">
+<h2>🤖 AI機能</h2>
 
-<div>AIチャット</div>
+<p>✅ AIチャット</p>
+<p>✅ AIイラスト</p>
+<p>✅ 星空アニメ</p>
+<p>✅ コウマル星</p>
+<p>✅ 声AI</p>
+<p>✅ 本物っぽいAI</p>
 
-<input type="text" id="msg" placeholder="話しかけてね">
+<button onclick="speakAI()">
+🎤 AIの声
+</button>
 
-<div class="chatText" id="reply"></div>
+<button onclick="drawArt()">
+🎨 AIアート
+</button>
 
 </div>
+
+<canvas id="artCanvas" width="300" height="200"
+style="background:white;margin-top:20px;border-radius:20px;">
+</canvas>
 
 </div>
 
 <script>
 
-function hello(){
-alert("🚀 コウマルAI 起動！");
+function talk(){
+
+const input =
+document.getElementById("userInput").value;
+
+const response =
+document.getElementById("response");
+
+if(input.includes("こんにちは")){
+response.innerHTML="🌙 こんにちは！";
 }
 
-const msg = document.getElementById("msg");
-const reply = document.getElementById("reply");
-
-msg.addEventListener("keypress",function(e){
-
-if(e.key==="Enter"){
-
-let text = msg.value;
-
-if(text.includes("こんにちは")){
-reply.innerHTML="🐰 こんにちは！";
+else if(input.includes("宇宙")){
+response.innerHTML="🚀 コウマル星へ出発！";
 }
-else if(text.includes("名前")){
-reply.innerHTML="🌙 コウマルAIです！";
+
+else if(input.includes("ウサギ")){
+response.innerHTML="🐰 サングラスウサギ発見！";
 }
+
 else{
-reply.innerHTML="🚀 宇宙通信を受信しました";
+response.innerHTML=
+"🤖 コウマルAIが考え中...";
 }
 
-msg.value="";
-
+speak(response.innerHTML);
 }
 
+function speak(text){
+
+const speech =
+new SpeechSynthesisUtterance(text);
+
+speech.lang="ja-JP";
+
+speechSynthesis.speak(speech);
+}
+
+function speakAI(){
+speak("ようこそコウマルAIへ");
+}
+
+function drawArt(){
+
+const canvas =
+document.getElementById("artCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+ctx.fillStyle="black";
+ctx.fillRect(0,0,300,200);
+
+ctx.fillStyle="cyan";
+
+for(let i=0;i<50;i++){
+
+ctx.beginPath();
+
+ctx.arc(
+Math.random()*300,
+Math.random()*200,
+Math.random()*5,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+}
+
+ctx.fillStyle="white";
+
+ctx.font="30px sans-serif";
+
+ctx.fillText("🌙",130,100);
+}
+
+const canvas =
+document.getElementById("stars");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<150;i++){
+
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*3
 });
+}
+
+function animate(){
+
+ctx.clearRect(0,0,
+canvas.width,
+canvas.height);
+
+ctx.fillStyle="white";
+
+stars.forEach(star=>{
+
+ctx.fillRect(
+star.x,
+star.y,
+star.size,
+star.size
+);
+
+star.y+=1;
+
+if(star.y>canvas.height){
+star.y=0;
+}
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
+
+</script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>コウマルAI</title>
+
+<style>
+body{
+margin:0;
+font-family:sans-serif;
+background:black;
+color:white;
+overflow:hidden;
+}
+
+canvas{
+position:fixed;
+top:0;
+left:0;
+z-index:-1;
+}
+
+.container{
+padding:30px;
+text-align:center;
+}
+
+h1{
+font-size:50px;
+color:cyan;
+text-shadow:0 0 20px cyan;
+}
+
+.chat-box{
+margin-top:30px;
+}
+
+input{
+padding:15px;
+width:300px;
+border:none;
+border-radius:10px;
+font-size:18px;
+}
+
+button{
+padding:15px 25px;
+border:none;
+border-radius:10px;
+background:cyan;
+font-size:18px;
+cursor:pointer;
+margin-left:10px;
+}
+
+#response{
+margin-top:20px;
+font-size:25px;
+color:yellow;
+}
+
+.card{
+margin-top:30px;
+padding:20px;
+background:rgba(255,255,255,0.1);
+border-radius:20px;
+backdrop-filter:blur(5px);
+}
+
+</style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="container">
+
+<h1>🌙 コウマルAI 🌙</h1>
+
+<p>未来のAIサイト</p>
+
+<div class="chat-box">
+<input id="userInput" placeholder="話しかけて！">
+<button onclick="talk()">送信</button>
+
+<div id="response"></div>
+</div>
+
+<div class="card">
+<h2>🤖 AI機能</h2>
+
+<p>✅ AIチャット</p>
+<p>✅ AIイラスト</p>
+<p>✅ 星空アニメ</p>
+<p>✅ コウマル星</p>
+<p>✅ 声AI</p>
+<p>✅ 本物っぽいAI</p>
+
+<button onclick="speakAI()">
+🎤 AIの声
+</button>
+
+<button onclick="drawArt()">
+🎨 AIアート
+</button>
+
+</div>
+
+<canvas id="artCanvas" width="300" height="200"
+style="background:white;margin-top:20px;border-radius:20px;">
+</canvas>
+
+</div>
+
+<script>
+
+function talk(){
+
+const input =
+document.getElementById("userInput").value;
+
+const response =
+document.getElementById("response");
+
+if(input.includes("こんにちは")){
+response.innerHTML="🌙 こんにちは！";
+}
+
+else if(input.includes("宇宙")){
+response.innerHTML="🚀 コウマル星へ出発！";
+}
+
+else if(input.includes("ウサギ")){
+response.innerHTML="🐰 サングラスウサギ発見！";
+}
+
+else{
+response.innerHTML=
+"🤖 コウマルAIが考え中...";
+}
+
+speak(response.innerHTML);
+}
+
+function speak(text){
+
+const speech =
+new SpeechSynthesisUtterance(text);
+
+speech.lang="ja-JP";
+
+speechSynthesis.speak(speech);
+}
+
+function speakAI(){
+speak("ようこそコウマルAIへ");
+}
+
+function drawArt(){
+
+const canvas =
+document.getElementById("artCanvas");
+
+const ctx =
+canvas.getContext("2d");
+
+ctx.fillStyle="black";
+ctx.fillRect(0,0,300,200);
+
+ctx.fillStyle="cyan";
+
+for(let i=0;i<50;i++){
+
+ctx.beginPath();
+
+ctx.arc(
+Math.random()*300,
+Math.random()*200,
+Math.random()*5,
+0,
+Math.PI*2
+);
+
+ctx.fill();
+}
+
+ctx.fillStyle="white";
+
+ctx.font="30px sans-serif";
+
+ctx.fillText("🌙",130,100);
+}
+
+const canvas =
+document.getElementById("stars");
+
+const ctx =
+canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<150;i++){
+
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+size:Math.random()*3
+});
+}
+
+function animate(){
+
+ctx.clearRect(0,0,
+canvas.width,
+canvas.height);
+
+ctx.fillStyle="white";
+
+stars.forEach(star=>{
+
+ctx.fillRect(
+star.x,
+star.y,
+star.size,
+star.size
+);
+
+star.y+=1;
+
+if(star.y>canvas.height){
+star.y=0;
+}
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
 
 </script>
 
