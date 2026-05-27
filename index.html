@@ -1,423 +1,343 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>コウマルAI</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 全体のデザイン設定 */
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #0b1426;
+            color: #ffffff;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
 
-<title>KODO AI</title>
+        /* 左側のサイドバー */
+        .sidebar {
+            width: 240px;
+            background-color: #111c33;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #1a2b4c;
+        }
 
-<style>
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #3ae7e1;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:sans-serif;
-}
+        .menu-btn {
+            background: none;
+            border: none;
+            color: #a0aec0;
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.2s;
+        }
 
-body{
-display:flex;
-height:100vh;
-background:white;
-color:black;
-}
+        .menu-btn:hover, .menu-btn.active {
+            background-color: #1a2b4c;
+            color: #ffffff;
+        }
 
-/* サイドバー */
+        .menu-btn.active {
+            border-left: 4px solid #3ae7e1;
+        }
 
-.sidebar{
-width:250px;
-background:#f3f4f6;
-padding:20px;
-border-right:1px solid #ddd;
-display:flex;
-flex-direction:column;
-}
+        /* 右側のメインコンテンツエリア */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background-color: #0f1a30;
+            position: relative;
+        }
 
-.logo{
-font-size:28px;
-font-weight:bold;
-margin-bottom:30px;
-}
+        /* 各機能の画面（最初は非表示、activeがついたら表示） */
+        .tab-panel {
+            display: none;
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
 
-.menu button{
-padding:15px;
-margin-bottom:10px;
-border:none;
-border-radius:10px;
-background:white;
-cursor:pointer;
-font-size:16px;
-text-align:left;
-border:1px solid #ddd;
-}
+        .tab-panel.active {
+            display: flex;
+            flex-direction: column;
+        }
 
-.menu button:hover{
-background:#eee;
-}
+        /* チャット画面のスタイル */
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
 
-/* メイン */
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
 
-.main{
-flex:1;
-display:flex;
-flex-direction:column;
-}
+        .message.bot { align-items: flex-start; }
+        .message.user { align-items: flex-end; }
 
-/* ヘッダー */
+        .bubble {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
 
-.header{
-height:70px;
-border-bottom:1px solid #ddd;
-display:flex;
-align-items:center;
-padding:0 20px;
-font-size:24px;
-font-weight:bold;
-}
+        .bot .bubble {
+            background-color: #1e2e4a;
+            color: #ffffff;
+            border-bottom-left-radius: 4px;
+        }
 
-/* チャット */
+        .user .bubble {
+            background-color: #2b6cb0;
+            color: #ffffff;
+            border-bottom-right-radius: 4px;
+        }
 
-.chat-area{
-flex:1;
-overflow-y:auto;
-padding:20px;
-display:flex;
-flex-direction:column;
-background:white;
-}
+        /* 警告メッセージ（嘘の情報と判断したとき用） */
+        .warning-bubble {
+            background-color: #742a2a !important;
+            border: 1px solid #e53e3e;
+            color: #fffaf0 !important;
+        }
 
-.message{
-max-width:70%;
-padding:15px;
-border-radius:15px;
-margin-bottom:15px;
-line-height:1.5;
-}
+        /* 入力エリアのスタイル */
+        .input-area {
+            padding: 20px;
+            background-color: #0f1a30;
+            display: flex;
+            gap: 10px;
+            border-top: 1px solid #1a2b4c;
+        }
 
-.user{
-background:#2563eb;
-color:white;
-align-self:flex-end;
-}
+        .input-area input {
+            flex: 1;
+            background-color: #1a2b4c;
+            border: 1px solid #2d3748;
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
 
-.ai{
-background:#f3f4f6;
-align-self:flex-start;
-}
+        .input-area button {
+            background-color: #00f0ff;
+            color: #0b1426;
+            border: none;
+            border-radius: 8px;
+            padding: 0 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
 
-/* 入力 */
+        .input-area button:hover {
+            background-color: #3ae7e1;
+        }
 
-.input-area{
-display:flex;
-padding:20px;
-border-top:1px solid #ddd;
-background:white;
-}
-
-.input-area input{
-flex:1;
-padding:15px;
-border-radius:12px;
-border:1px solid #ccc;
-font-size:16px;
-}
-
-.input-area button{
-margin-left:10px;
-padding:15px 20px;
-border:none;
-border-radius:12px;
-background:black;
-color:white;
-font-size:16px;
-cursor:pointer;
-}
-
-/* スマホ */
-
-@media(max-width:700px){
-
-.sidebar{
-display:none;
-}
-
-}
-
-</style>
+        /* 他の機能のダミー表示用スタイル */
+        .placeholder-card {
+            background: #111c33;
+            border: 1px solid #1a2b4c;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .placeholder-card i {
+            font-size: 48px;
+            color: #3ae7e1;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- サイド -->
-
-<div class="sidebar">
-
-<div class="logo">
-KODO AI
-</div>
-
-<div class="menu">
-
-<button onclick="newChat()">
-💬 新しいチャット
-</button>
-
-<button onclick="aiImage()">
-🎨 AI画像
-</button>
-
-<button onclick="homeworkAI()">
-📚 宿題AI
-</button>
-
-<button onclick="storyAI()">
-📖 ストーリーAI
-</button>
-
-<button onclick="voiceMode()">
-🎤 音声モード
-</button>
-
-</div>
-
-</div>
-
-<!-- メイン -->
-
-<div class="main">
-
-<div class="header">
-KODO AI
-</div>
-
-<!-- チャット -->
-
-<div class="chat-area" id="chatArea">
-
-<div class="message ai">
-こんにちは！KODO AIです！
-</div>
-
-</div>
-
-<!-- 入力 -->
-
-<div class="input-area">
-
-<input
-type="text"
-id="userInput"
-placeholder="メッセージを入力..."
-onkeydown="enterSend(event)"
->
-
-<button onclick="startVoice()">
-🎤
-</button>
-
-<button onclick="sendMessage()">
-送信
-</button>
-
-</div>
-
-</div>
-
-<script>
-
-const chat =
-document.getElementById("chatArea");
-
-/* メッセージ追加 */
-
-function addMessage(text,type){
-
-let msg =
-document.createElement("div");
-
-msg.className =
-"message " + type;
-
-msg.innerText = text;
-
-chat.appendChild(msg);
-
-chat.scrollTop =
-chat.scrollHeight;
-
-}
-
-/* 送信 */
-
-function sendMessage(){
-
-let input =
-document.getElementById("userInput");
-
-let text =
-input.value.trim();
-
-if(text===""){
-return;
-}
-
-/* ユーザー */
-
-addMessage(text,"user");
-
-input.value = "";
-
-/* AI */
-
-setTimeout(()=>{
-
-let reply = "";
-
-/* AI返答 */
-
-if(text.includes("こんにちは")){
-
-reply =
-"こんにちは！";
-
-}
-
-else if(text.includes("名前")){
-
-reply =
-"KODO AIです！";
-
-}
-
-else if(text.includes("絵")){
-
-reply =
-"AI画像機能を開きます！";
-
-}
-
-else if(text.includes("宿題")){
-
-reply =
-"宿題を手伝います！";
-
-}
-
-else{
-
-reply =
-"質問ありがとうございます！";
-}
-
-addMessage(reply,"ai");
-
-speak(reply);
-
-},300);
-
-}
-
-/* Enter送信 */
-
-function enterSend(e){
-
-if(e.key==="Enter"){
-
-sendMessage();
-
-}
-
-}
-
-/* 音声読み上げ */
-
-function speak(text){
-
-const speech =
-new SpeechSynthesisUtterance(text);
-
-speech.lang = "ja-JP";
-
-speechSynthesis.speak(speech);
-
-}
-
-/* 音声認識 */
-
-function startVoice(){
-
-const recognition =
-new webkitSpeechRecognition();
-
-recognition.lang = "ja-JP";
-
-recognition.start();
-
-recognition.onresult =
-function(event){
-
-let voiceText =
-event.results[0][0].transcript;
-
-document.getElementById("userInput").value =
-voiceText;
-
-sendMessage();
-
-};
-
-}
-
-/* メニュー */
-
-function newChat(){
-
-chat.innerHTML = "";
-
-addMessage(
-"新しいチャットを開始しました！",
-"ai"
-);
-
-}
-
-function aiImage(){
-
-addMessage(
-"🎨 AI画像モード",
-"ai"
-);
-
-}
-
-function homeworkAI(){
-
-addMessage(
-"📚 宿題AI起動",
-"ai"
-);
-
-}
-
-function storyAI(){
-
-addMessage(
-"📖 ストーリーAI起動",
-"ai"
-);
-
-}
-
-function voiceMode(){
-
-addMessage(
-"🎤 音声モード開始",
-"ai"
-);
-
-}
-
-</script>
-
+    <div class="sidebar">
+        <div class="logo">🌙 コウマルAI</div>
+        <button class="menu-btn active" onclick="switchTab('chat')"><i class="fa-solid fa-comments"></i> AIチャット</button>
+        <button class="menu-btn" onclick="switchTab('news')"><i class="fa-solid fa-newspaper"></i> ニュース</button>
+        <button class="menu-btn" onclick="switchTab('art')"><i class="fa-solid fa-palette"></i> AIアート</button>
+        <button class="menu-btn" onclick="switchTab('voice')"><i class="fa-solid fa-microphone"></i> 音声AI</button>
+        <button class="menu-btn" onclick="switchTab('game')"><i class="fa-solid fa-gamepad"></i> ゲーム</button>
+    </div>
+
+    <div class="main-content">
+
+        <div id="panel-chat" class="tab-panel active">
+            <div class="chat-container" id="chatBox">
+                <div class="message bot">
+                    <div class="bubble">こんにちは！コウマルAIへようこそ！何についてお話ししますか？</div>
+                </div>
+            </div>
+            <div class="input-area">
+                <input type="text" id="userInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">送信</button>
+            </div>
+        </div>
+
+        <div id="panel-news" class="tab-panel">
+            <h2>🌙 コウマルAI ニュース</h2>
+            <div class="placeholder-card">
+                <i class="fa-solid fa-newspaper"></i>
+                <h3>最新のテクノロジーニュース</h3>
+                <p>ここにAIが生成したニュースや、お気に入りのトピックが表示されます。</p>
+            </div>
+        </div>
+
+        <div id="panel-art" class="tab-panel">
+            <h2>🌙 コウマルAI アート</h2>
+            <div class="placeholder-card">
+                <i class="fa-solid fa-palette"></i>
+                <h3>画像生成・アート機能</h3>
+                <p>描きたい絵のキーワードを入力すると、AIがイラストを作ります（開発中）。</p>
+            </div>
+        </div>
+
+        <div id="panel-voice" class="tab-panel">
+            <h2>🌙 コウマルAI 音声</h2>
+            <div class="placeholder-card">
+                <i class="fa-solid fa-microphone"></i>
+                <h3>音声認識・読み上げ</h3>
+                <p>コウマルAIが落ち着いた声で文章を読み上げたり、あなたの声を聴き取ります。</p>
+            </div>
+        </div>
+
+        <div id="panel-game" class="tab-panel">
+            <h2>🌙 コウマルAI ゲームルーム</h2>
+            <div class="placeholder-card">
+                <i class="fa-solid fa-gamepad"></i>
+                <h3>AIミニゲーム</h3>
+                <p>AIと対戦するゲームや、シミュレーターをここに合体させることができます！</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // 画面（タブ）を切り替える関数
+        function switchTab(tabName) {
+            // すべてのパネルから active クラスを消す
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            // すべてのメニューボタンから active クラスを消す
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+
+            // 選んだ画面とボタンだけを表示する
+            document.getElementById('panel-' + tabName).classList.add('active');
+            
+            // クリックされたボタンを光らせる
+            const eventTarget = event.currentTarget;
+            if(eventTarget) eventTarget.classList.add('active');
+        }
+
+        // エンターキーでも送信できるようにする
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // メッセージを送信して、AIが考えて返事をする関数
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const text = input.value.trim();
+            if (text === '') return;
+
+            // 1. ユーザーのメッセージを画面に出す
+            appendMessage(text, 'user');
+            input.value = '';
+
+            // 2. AIが考えて返事をする（少し時間を遅らせてリアルにする）
+            setTimeout(() => {
+                const aiResponse = generateAIResponse(text);
+                appendMessage(aiResponse.text, 'bot', aiResponse.isWarning);
+            }, 600);
+        }
+
+        // 画面にメッセージを追加する
+        function appendMessage(text, sender, isWarning = false) {
+            const chatBox = document.getElementById('chatBox');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'bubble';
+            if (isWarning) {
+                bubbleDiv.className += ' warning-bubble';
+            }
+            bubbleDiv.innerText = text;
+
+            messageDiv.appendChild(bubbleDiv);
+            chatBox.appendChild(messageDiv);
+
+            // 一番下まで自動スクロール
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // AIの頭脳（文章を考えて、嘘をチェックする）
+        function generateAIResponse(inputText) {
+            // 嘘の情報（間違った噂など）をその場で判断するキーワードチェック
+            const fakeNewsKeywords = ['チーズでできている', '嘘の情報', '1+1は3', 'お化けが出た'];
+            
+            for (let keyword of fakeNewsKeywords) {
+                if (inputText.includes(keyword)) {
+                    return {
+                        text: `⚠️【注意】コウマルAIのデータチェック機能：入力された内容に間違っている可能性、または確認されていない情報が含まれています。正しい情報を確認してください。`,
+                        isWarning: true
+                    };
+                }
+            }
+
+            // よくある質問への賢い返答
+            if (inputText.includes('こんにちは') || inputText.includes('ハロー')) {
+                return { text: 'こんにちは！今日もコウマルAIと一緒に新しいことを始めましょう。何をお手伝いしますか？', isWarning: false };
+            }
+            if (inputText.includes('ゲーム')) {
+                return { text: 'ゲームですね！左の「ゲーム」メニューを押すと、いつでもゲームコーナーへ行けますよ。どんなゲームが好きですか？', isWarning: false };
+            }
+            if (inputText.includes('城') || inputText.includes('お城')) {
+                return { text: 'お城の歴史はとても深いですよね。安土城や犬山城など、日本の素晴らしいお城についていつでも聞いてください！', isWarning: false };
+            }
+            if (inputText.includes('おすすめのハンバーガー') || inputText.includes('メニュー')) {
+                return { text: 'コウマルAIのおすすめは、やっぱり星のようにキラキラした「スターダストバーガー」や、大迫力の「オーバードライブバーガー」ですね！', isWarning: false };
+            }
+
+            // 何にでも使える落ち着いたAIの返事
+            return { 
+                text: `「${inputText}」についてですね。しっかりと調べて、分かりやすくお答えします。コウマルAIはいつでもあなたをサポートしますよ！`, 
+                isWarning: false 
+            };
+        }
+    </script>
 </body>
 </html>
