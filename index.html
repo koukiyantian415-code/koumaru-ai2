@@ -328,8 +328,12 @@
             }
         }
 
+        // Gemini API設定
+        const GEMINI_API_KEY = 'AQ.Ab8RN6I5n-DNTxr5x6IxlT44qNhmwBYYooHUHpCYTMYUJuUg2Q';
+        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent';
+
         // メッセージを送信して、AIが考えて返事をする関数
-        function sendMessage() {
+        async function sendMessage() {
             const input = document.getElementById('userInput');
             const text = input.value.trim();
             if (text === '') return;
@@ -338,11 +342,14 @@
             appendMessage(text, 'user');
             input.value = '';
 
-            // 2. AIが考えて返事をする（少し時間を遅らせてリアルにする）
-            setTimeout(() => {
-                const aiResponse = generateAIResponse(text);
-                appendMessage(aiResponse.text, 'bot', aiResponse.isWarning);
-            }, 600);
+            // 2. AIが考えて返事をする
+            try {
+                const aiResponse = await callGeminiAPI(text);
+                appendMessage(aiResponse, 'bot', false);
+            } catch (error) {
+                console.error('API Error:', error);
+                appendMessage('申し訳ありません。AIの処理中にエラーが発生しました。もう一度お試しください。', 'bot', true);
+            }
         }
 
         // 画面にメッセージを追加する
@@ -365,39 +372,42 @@
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // AIの頭脳（文章を考えて、嘘をチェックする）
-        function generateAIResponse(inputText) {
-            // 嘘の情報（間違った噂など）をその場で判断するキーワードチェック
-            const fakeNewsKeywords = ['チーズでできている', '嘘の情報', '1+1は3', 'お化けが出た'];
-            
-            for (let keyword of fakeNewsKeywords) {
-                if (inputText.includes(keyword)) {
-                    return {
-                        text: `⚠️【注意】コウマルAIのデータチェック機能：入力された内容に間違っている可能性、または確認されていない情報が含まれています。正しい情報を確認してください。`,
-                        isWarning: true
-                    };
-                }
-            }
-
-            // よくある質問への賢い返答
-            if (inputText.includes('こんにちは') || inputText.includes('ハロー')) {
-                return { text: 'こんにちは！今日もコウマルAIと一緒に新しいことを始めましょう。何をお手伝いしますか？', isWarning: false };
-            }
-            if (inputText.includes('ゲーム')) {
-                return { text: 'ゲームですね！左の「ゲーム」メニューを押すと、いつでもゲームコーナーへ行けますよ。どんなゲームが好きですか？', isWarning: false };
-            }
-            if (inputText.includes('城') || inputText.includes('お城')) {
-                return { text: 'お城の歴史はとても深いですよね。安土城や犬山城など、日本の素晴らしいお城についていつでも聞いてください！', isWarning: false };
-            }
-            if (inputText.includes('おすすめのハンバーガー') || inputText.includes('メニュー')) {
-                return { text: 'コウマルAIのおすすめは、やっぱり星のようにキラキラした「スターダストバーガー」や、大迫力の「オーバードライブバーガー」ですね！', isWarning: false };
-            }
-
-            // 何にでも使える落ち着いたAIの返事
-            return { 
-                text: `「${inputText}」についてですね。しっかりと調べて、分かりやすくお答えします。コウマルAIはいつでもあなたをサポートしますよ！`, 
-                isWarning: false 
+        // Gemini APIを呼び出す関数
+        async function callGeminiAPI(userInput) {
+            const requestBody = {
+                contents: [
+                    {
+                        parts: [
+                            {
+                                text: userInput
+                            }
+                        ]
+                    }
+                ]
             };
+
+            const response = await fetch(GEMINI_API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-goog-api-key': GEMINI_API_KEY
+                },
+                body: JSON.stringify(requestBody)
+            });
+
+            if (!response.ok) {
+                throw new Error(`API Error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            
+            // APIレスポンスからテキストを抽出
+            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                return data.candidates[0].content.parts[0].text;
+            }
+            
+            throw new Error('Unexpected API response format');
+        }
         }
     </script>
 </body>
