@@ -225,6 +225,28 @@
             background-color: #3ae7e1;
         }
 
+        .input-area button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .chat-status {
+            min-height: 24px;
+            margin: 0 30px 12px;
+            color: #a0d8ff;
+            font-size: 14px;
+        }
+
+        .chat-error {
+            margin: 0 30px 10px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            background-color: #742a2a;
+            color: #fffaf0;
+            font-size: 14px;
+            border: 1px solid #e53e3e;
+        }
+
         /* 他の機能のダミー表示用スタイル */
         .placeholder-card {
             background: #111c33;
@@ -261,9 +283,11 @@
                     <div class="bubble">こんにちは！コウマルAIへようこそ！何についてお話ししますか？</div>
                 </div>
             </div>
+            <div id="chatStatus" class="chat-status" aria-live="polite"></div>
+            <div id="chatError" class="chat-error" aria-live="assertive"></div>
             <div class="input-area">
                 <input type="text" id="userInput" placeholder="メッセージを入力..." onkeypress="handleKeyPress(event)">
-                <button onclick="sendMessage()">送信</button>
+                <button id="sendBtn" onclick="sendMessage()">送信</button>
             </div>
         </div>
 
@@ -306,108 +330,130 @@
     </div>
 
     <script>
-        // 画面（タブ）を切り替える関数
-        function switchTab(tabName) {
-            // すべてのパネルから active クラスを消す
-            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
-            // すべてのメニューボタンから active クラスを消す
-            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
+        const WORKER_URL = 'https://kimikara-cf-workers.n2001kouta.workers.dev';
+        const API_URL = `${WORKER_URL.replace(/\/\/+$/, '')}/api/chat`;
+        const messages = [
+            { role: 'bot', text: 'こんにちは！コウマルAIへようこそ！何についてお話ししますか？' }
+        ];
 
-            // 選んだ画面とボタンだけを表示する
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.menu-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById('panel-' + tabName).classList.add('active');
-            
-            // クリックされたボタンを光らせる
-            const eventTarget = event.currentTarget;
-            if(eventTarget) eventTarget.classList.add('active');
+            const eventTarget = event?.currentTarget;
+            if (eventTarget) eventTarget.classList.add('active');
         }
 
-        // エンターキーでも送信できるようにする
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 sendMessage();
             }
         }
 
-        // Gemini API設定
-        const GEMINI_API_KEY = 'AQ.Ab8RN6I5n-DNTxr5x6IxlT44qNhmwBYYooHUHpCYTMYUJuUg2Q';
-        const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent';
-
-        // メッセージを送信して、AIが考えて返事をする関数
         async function sendMessage() {
             const input = document.getElementById('userInput');
+            const button = document.getElementById('sendBtn');
+            const status = document.getElementById('chatStatus');
+            const errorBox = document.getElementById('chatError');
             const text = input.value.trim();
             if (text === '') return;
 
-            // 1. ユーザーのメッセージを画面に出す
+            errorBox.textContent = '';
             appendMessage(text, 'user');
+            messages.push({ role: 'user', text });
             input.value = '';
+            button.disabled = true;
+            input.disabled = true;
+            status.textContent = '送信中…しばらくお待ちください。';
 
-            // 2. AIが考えて返事をする
             try {
-                const aiResponse = await callGeminiAPI(text);
-                appendMessage(aiResponse, 'bot', false);
+                const aiResponse = await callWorkerAPI(text);
+                appendMessage(aiResponse, 'bot');
+                messages.push({ role: 'bot', text: aiResponse });
             } catch (error) {
-                console.error('API Error:', error);
-                appendMessage('申し訳ありません。AIの処理中にエラーが発生しました。もう一度お試しください。', 'bot', true);
+                const message = error instanceof Error ? error.message : String(error);
+                appendMessage('申し訳ありません。AI の応答を取得できませんでした。' + (message ? ` (${message})` : ''), 'bot', true);
+                errorBox.textContent = 'エラー: ' + message;
+                console.error('Worker API error:', error);
+            } finally {
+                button.disabled = false;
+                input.disabled = false;
+                status.textContent = '';
+                input.focus();
             }
         }
 
-        // 画面にメッセージを追加する
         function appendMessage(text, sender, isWarning = false) {
             const chatBox = document.getElementById('chatBox');
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${sender}`;
-
             const bubbleDiv = document.createElement('div');
             bubbleDiv.className = 'bubble';
-            if (isWarning) {
-                bubbleDiv.className += ' warning-bubble';
-            }
+            if (isWarning) bubbleDiv.className += ' warning-bubble';
             bubbleDiv.innerText = text;
-
             messageDiv.appendChild(bubbleDiv);
             chatBox.appendChild(messageDiv);
-
-            // 一番下まで自動スクロール
             chatBox.scrollTop = chatBox.scrollHeight;
         }
 
-        // Gemini APIを呼び出す関数
-        async function callGeminiAPI(userInput) {
+        function buildWorkerMessage(latestQuestion) {
+            const systemPrompt = 'あなたは小中学生にもわかりやすく説明するAI先生です。\nむずかしい言葉を使うときは、短い説明をつけてください。\n答えが長くなりそうなときは、最初に結論を言ってください。\n\n';
+            const pairs = [];
+            for (let i = messages.length - 1; i > 0 && pairs.length < 6; i--) {
+                if (messages[i].role === 'bot' && messages[i - 1]?.role === 'user') {
+                    pairs.unshift({ user: messages[i - 1].text, bot: messages[i].text });
+                    i -= 1;
+                }
+            }
+            const historyText = pairs.length > 0
+                ? 'これまでの会話:\n' + pairs.map(pair => `ユーザー: ${pair.user}\nAI: ${pair.bot}`).join('\n') + '\n\n'
+                : '';
+            return `${systemPrompt}${historyText}今回の質問:\n${latestQuestion}`;
+        }
+
+        async function callWorkerAPI(userInput) {
+            const message = buildWorkerMessage(userInput);
             const requestBody = {
-                contents: [
-                    {
-                        parts: [
-                            {
-                                text: userInput
-                            }
-                        ]
-                    }
-                ]
+                studentId: 'koukiyantian415-code',
+                publicAppId: 'html-ai-chat',
+                message
             };
 
-            const response = await fetch(GEMINI_API_URL, {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'X-goog-api-key': GEMINI_API_KEY
+                    'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(requestBody)
             });
 
             if (!response.ok) {
-                throw new Error(`API Error: ${response.status}`);
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText || response.statusText}`);
             }
 
             const data = await response.json();
-            
-            // APIレスポンスからテキストを抽出
-            if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
-                return data.candidates[0].content.parts[0].text;
-            }
-            
-            throw new Error('Unexpected API response format');
+            return parseWorkerResponse(data);
         }
+
+        function parseWorkerResponse(data) {
+            if (!data) throw new Error('空のレスポンスを受け取りました。');
+            const candidates = [
+                data.reply,
+                data.answer,
+                data.message,
+                data.text,
+                data.result?.reply,
+                data.result?.text,
+                data.result?.message,
+                data.data?.reply,
+                data.data?.text,
+                data.data?.message
+            ];
+            const found = candidates.find(item => typeof item === 'string' && item.trim());
+            if (found) return found.trim();
+            if (typeof data === 'string' && data.trim()) return data.trim();
+            throw new Error('予期しないレスポンス形式です。');
         }
     </script>
 </body>
