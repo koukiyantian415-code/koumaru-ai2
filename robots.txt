@@ -1,19 +1,4 @@
-# Search Engine Crawlers Directive
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /private/
-Disallow: /temp/
 
-# Specific search engines optimization
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-# Sitemap location
-Sitemap: /sitemap.xml
-
-# Crawl delay (optional - 1 second delay between requests)
-Crawl-delay: 1
+Sitemap: https://koukiyantian415-code.github.io/koumaru-ai2/sitemap.xml
