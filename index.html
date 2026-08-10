@@ -6,25 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="jn_d63zR11oF2waNxwcgXN-Ff_grIlhlpmbqvWF2zeE" />
     <!-- 基本的なSEOメタタグ -->
-    <title>KOMARU AI（コマルAI）| チャットで話すだけでゲームを自動生成するAI</title>
-    <meta name="description" content="KOMARU AIは、チャットでアイデアを伝えるだけでブラウザですぐ遊べるミニゲームを自動生成する日本語対応AI。ゲーム作成AIを中心に、音声AIなどの新機能も順次追加予定。">
+    <title>こうまるAI（こうまるAI）| チャットで話すだけでゲームを自動生成するAI</title>
+    <meta name="description" content="こうまるAIは、チャットでアイデアを伝えるだけでブラウザですぐ遊べるミニゲームを自動生成する日本語対応AI。ゲーム作成AIを中心に、音声AIなどの新機能も順次追加予定。">
     <meta name="keywords" content="AI, ゲーム作成AI, ゲーム自動生成, ChatGPT代替, Gemini代替, プログラミングAI, 音声AI, ブラウザゲーム">
-    <meta name="author" content="KOMARU AI Team">
+    <meta name="author" content="こうまるAI Team">
     <meta name="robots" content="index, follow">
     <meta name="language" content="ja">
 
     <!-- Open Graph (SNS共有用) -->
-    <meta property="og:title" content="KOMARU AI | チャットで話すだけでゲームを自動生成するAI">
+    <meta property="og:title" content="こうまるAI | チャットで話すだけでゲームを自動生成するAI">
     <meta property="og:description" content="アイデアを伝えるだけでブラウザですぐ遊べるミニゲームを自動生成するAI。チャットで相談しながらゲームを作れます。">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://koukiyantian415-code.github.io/koumaru-ai2/">
     <meta property="og:image" content="">
-    <meta property="og:site_name" content="KOMARU AI">
+    <meta property="og:site_name" content="こうまるAI">
     <meta property="og:locale" content="ja_JP">
 
     <!-- Twitter Card (X/Twitter共有用) -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="KOMARU AI | チャットで話すだけでゲームを自動生成するAI">
+    <meta name="twitter:title" content="こうまるAI | チャットで話すだけでゲームを自動生成するAI">
     <meta name="twitter:description" content="アイデアを伝えるだけでブラウザですぐ遊べるミニゲームを自動生成するAI。">
     <meta name="twitter:image" content="">
 
@@ -33,8 +33,8 @@
     {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "KOMARU AI",
-        "alternateName": "コマルAI",
+        "name": "こうまるAI",
+        "alternateName": "こうまるAI",
         "description": "チャットでアイデアを伝えるだけでブラウザですぐ遊べるミニゲームを自動生成するAI。音声AIなどの新機能も開発中。",
         "url": "https://koukiyantian415-code.github.io/koumaru-ai2/",
         "applicationCategory": "GameApplication",
@@ -65,7 +65,7 @@
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M23 6C15.8 7.6 11 14.1 11 21.5 11 29.9 17.8 36.7 26.2 36.7c3.4 0 6.5-1.1 9-2.9-2.9 1-6.1 1.3-9.4.6-8-1.7-13.5-9.1-12.5-17.2C14.1 10 18.2 6.4 23 6z' fill='%230fb8ae'/%3E%3Ccircle cx='30' cy='10' r='1.6' fill='%230fb8ae'/%3E%3Ccircle cx='34' cy='16' r='1' fill='%230fb8ae'/%3E%3C/svg%3E">
 
     <!-- フィード（RSS） -->
-    <link rel="alternate" type="application/rss+xml" title="KOMARU AI更新情報" href="/feed.xml">
+    <link rel="alternate" type="application/rss+xml" title="こうまるAI更新情報" href="/feed.xml">
 
     <style>
         /* ===== デザイントークン ===== */
@@ -632,6 +632,24 @@
             .tab-panel { padding: 20px; }
             .game-frame { height: 340px; }
         }
+
+        /* ===== 検索UI ===== */
+        .variant-search { margin-top: 10px; }
+        .variant-search input {
+            width: 100%;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text);
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+        .variant-buttons { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+        .variant-buttons button { flex:1 1 auto; padding:6px 8px; font-size:12px; border-radius:8px; border:1px solid var(--border); background:var(--surface); color:var(--text-soft); cursor:pointer; }
+        .variant-buttons button:hover { color:var(--text); border-color:var(--accent); }
+        .variant-result { margin-top:8px; font-size:12px; color:var(--text-faint); }
+        .search-hit { background: #fff3b0; border-radius:3px; padding:0 2px; }
     </style>
 </head>
 <body>
@@ -641,12 +659,26 @@
             <div class="brand-mark">
                 <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCACgAKADASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD5g8U2mkzaxfN4eS6XSCQYhfbPOAwM7tvHXPTtXPXFmTCmU++c+YRk8en51638W/hPP8JPiJrfhO8uPtf9nz+WbqNNnnIVDK4XnGVYcc456159c6SYgu1Q275w4cEBegBHY5B6+tf0alGpTjKLvFpNPurH4mqrhOUZaNOzPpL/AIJtfEmx8D/FXWPDWoypBH4mto47aVuB9ohZmVM/7Su+PcV+ns1zFZW0txO4jhiQySO3RVAySfwFfhJbtc6ZewXdrK9tcwSLLFLE21kZTlWBHQgiv0m/Zf8A2wtO+Kmgr4X8YPHa+IhC0MmOFuo8YLpnrweV6r7jmvyXi3JasKjzCgrp25vJrS/ofpvDea0qsFg6rs1t5rt6n0Npfxk8O6jdCMtd2SE4Se5h2xn0JIJK/iB74rnPj5+z7o/xp0p9RtkS28VwW220vlYKlyo5WKU4OVOThuo3dxxXCapocugaiYGZZIG+aC4Q5SZOzA/zHY12Xw58eDQrqHS72Yf2bO4SJnPFvITwPZGPHsSD0Jr8jy3OcRhMQpSfLJPdfk/I/Xs24cw9fDOphryja9nrp3Xmv61Pz48SWUnh/wAS6np+uxS22rRTtDNb3RO4SKcHPPP1B5zx1rnr4o8xaPaAvZCTj8yea+rP+Cj/AMO5rey0X4h6V95ZV03U4WjVkJIJt5jkZDZDRk98p6V80/Cv4I+MfjHZeINbtoF0EaRojatFeXNtIseqLlgqJ2O7y5BuGQCoHfj+k8DnOErYGONqyUVs12eisvwfoz+dsVl+JpYp4WnFye69D7P/AOCf+nmTwV4m1SYl57nUFh3N12RoMD8y3513PxR8Qy3/AIumtklYQad+6jVWIAkwCz/XPGe22uT/AGFE1PRfAE+ja7p0+k62ZPt0lhcxmOVIpGJidkPK7l5APNRSalH4h8a3sEUiSz3WoywiNWBYsZSvT2/pX4BxXX9pjKqg7803t2W36H7zwbhoqnGdRfDBb93v+pW/bf14r8J/Bgl2i6u7wzEkfNxbfNj8XGa+NLTxU1vaojRDKnO8da9//br+IWiXXjnRfCz6rHbDRLEGRSCwSSYgjcAOCEjTj/ar4/tvFiNqrJcyQ/YFcqZYkYs6g8Mo9/ev3jhXDOGU0+dau7/HQ/Ds/wATfMZ8my0O/uNY/tGUysd57ZHSrMF5NbxeWp+Z+rE81zHxI8ReGtOtrSPwhrF3fTSQRtcSzWqxLG5UF1XLE8HIzXARePdeijMAu3aHGCuACw9yOf1r6dU1KKdvv0PD9s4yavf0PTbn4rW3h27UQX7G6VyrvGpxGO/zV9VfAb9mnxJ8RNIt9e1y5u/C2iXsfmxBkxfXUbD7yqeI1YH7zckH7vevO/2Jvg7B4/mu/iT420+C48MaFKYdJ0vyVENze8FmK4+YJleucsRnhSK+wtM8QeIvFHjmxcX0yxCYSNDAxWGOIH5gV6MCOMnqSK/LOKeJo4GssDhF773a6eR+icNcPVswozxuIlaEbtX2dv6/rY5Hxn+wb8L/ABVobafLHrVtcCMpDfLqTu0TdA/lkbG+m38q/L7XtNj+Geq+N/Bl5pGn6reR3T6aNRlV/NgaGfl4cMAN23ByDwa/ZP40/FXS/g74C1TxNqjgi1iP2e33Ya4mPEca+5bAr8fvDHgLxd8cvH81nounTaz4g1WeW7mEeAil3LSSO7cIgLfeJA6d+K34VxGKxLrVcVUbpRS1k9ne+78t/kefxBSw9BUoUY2qSey6rb89vmeeadotzqd9BZ2ds091cOIookGSzE4AFfVHhXSvAvwystB/4Sm4s/EOpaTieLS9GtwrCZmUhppk5kdGwu7JGOBwK+h/hF/wTV8L6BY2t5471m+13WRh3stImNtawnuvmAeZJ6ZG0e1ewal+x38JryyktYvCxsGYY+0Wt9Oky85zuLkZ+orxeJs3hj5wo4Ss4wjq3FWbfk3svRJ+ZtlmT14pzrJJvvr+B538XvgVpXxr8aR6q8U+i+I9T0YSwxtOJIjKiFED/wB4fKBuGPxxXwRruhTaXqV1ZzwmGeCVopU6MGDYIP0Ir9JPCWpG58YNLqF/iaNnWN42G1FCqAFzyQSS3tkV4ZN+zFfeNPi34ibxRfSWFnLdtcR31la4W78xycxluABnnqc+3NfbcPZzThRlDEztCMU0tW1q00urVrafofN55lFSpVjLDQvKUrN6JPTd9E9z5a8TXejaz4e0Cw03QE07ULGKRL29WZnN4xclWKnhcAgcVyCWsthPFcQyvBcROJI5YmKvGwPDKw5BHqK95+PnwEvPgt4ph09rpdS069iM9pdhNjMoOGVl5wwPpwcg15UdI8mVS27y2OCQu7A9cV97QeHxWHjVoPmhK7W7vfffX5dNj4iq8RhK7pVlyzjZPyttt+fXc98+D37Wxkhg0Dx06+XkLHqxGIyegMoH3G/6aLwe4HU+w+K9Zh0zRLvUmlV9JjgaaW53ZCRgZLHHbHcda+FdQ02FJC0RYwrn5iuCRzg4BPOK0vir42uvh/8ADvTPhol1Lc3urqlxqUM91hLGNm8xIExgrnALAnGB0w1fiHGfC+X0VHEU3yOb2/y/y+4/dOCuMcwtPD1F7SMVu/y9fP7z2v41ftZeIfGuqxfDua3sxpVi8Nvrlzf2wnheRdj/ACo3yu8Z25aTK71OEwMn3jTvCs/hLTvAetfDv4kzeIdHuLn7FfQ3lrbQyJEwY+dbGGJFjMGC7RsCjKpBBzmvh/Tf2hfBHiez+0+ItGf+2rldt5daZdoi3ZAA8xleNtrMAMlSQx5wCTXcfC3x54p+Lg1bwP8ACrwTPFa3+1brUYppSkZ3DLz3jfKikKMqoBIHCNXzlZYLD4KMYOUqlttLX2vu3+C87GtOWNxGNnKcYxp331vbe1rJL735XLvxG/bebxfoUtrNq8en6/JqGLnVdM0H7MJFEeY0+1IC6ksFVhuJxxkDivozwBrvgHW/CesfEa6vNUu5rwAWNnYXcg/s6QxBRaeRu8pNrj5DtGVw2WJIHYeDv+CdXwlsvAMej+JdEXxJrM0e++1aS5mRnnbJZolD4jUE4UDsBnJzXz58SP2Zvi5+yzoOq3Pw/wBatNa8FCbz5JpLiOzv4ExtVJfMISUfNjAIBLZ2ZNeJhf3D/epzUt7vZeWnTp+p7GIj7VJU3ytdlv669Tyf4geEm8aaLdeKr28gk8UrG97feRvIvYRKkRlcMcRypviyq/KyMCApUg+SCwyhOCMdDivWdX8S/FG78NapDrPw41HR9IYW8d/qcGgJblo2kTaZJFCjYX2MShwdq5yM1xKaWm1fNyBkA7evvX7twbj3jsLVoO/7tpK+/K1ovk00vI/H+KsN9RxFKp/z8Wva6ev5pvzObj09ppY0t42aU4AUc8+tT6ppV5prCyvbRoLmJmJDghjnnaR9c+/P0rsPCmoS+D9ftNVhghlaCTcsc8ayqSMdVbIP413GrDXf2jfiqLzTdAa9uppklmttPhVAkQcbmduFUAZy7kD3r6TF4ivha/NOmvYRg5Obla0lsreavrc+cw7p14KKm/aOSSjbdPd38j7PFlF8Lvhd4B8D2y/Z/wCz9LjubscAmdwWctjuXaU/lXrHh+ex+HPgh9Y1d44LiWPz52kYLtGNypk9MDk+nPpXmXiSDS/FHjW41XVtSexgijQJbWyB0xHyoMhU7snJOFwOxauV+LGs6b8SPDGoWerHVr3TjDI7hL1498a/MMRoFyTt6Hr0xiv4ircYZWsfUr4irzuUre4ub16pa9Ne5/TuIxmGw+WUcHhdorXpd9F3t306Kx8pfHv4y6/+078SLLTdKjnuNM+1C10jT0BBnkY7RIV7Fs4UH7qkk8k197/CH4ZeHv2UfhdFanyr7xBe7Tf3kYw97c4z5aE9Ik5A7AAseWr40+Hnj74VfDH4teD/AByyymyl0xJrfT7S25gZx5aXLMWILgeZlepPzZ4GfpTUPGz/ABc8XvNpYlubUnyNOgCEHygeXIP3Sx+Y5xgbQelfqOY8X4TF5dRwmVQlTh1jJWk5X69++l1d26HynCuTLMsxq4rHVE5R1flHyvt28l5s1/EHivV/E8jveXzrET8trAxjhQegAPP1bJr1P4XWl7pvhFTqE0pRpGlhW4YloosDAyeQMgkA9Aa8/wBZ1XwX8EdK/tTxnqUbXqjMVmql9zYyFRAMu36e3evkj4/ftceJvjBa3Oh6QknhrwtLlZYY3/0q8X0lcfdU/wBxevcnpXNw/wAOZjm1b2kE7dW9l6vq/JH03E/E2V5bQWHjZW1SS1fou3952+Z6Rplzrmkm6v7u3t2lM5+yzgmVVi2Rr8r9vMCZ6DqRXofhn4xWGqWSSfK1vHIUZmBZFkXG+MPyMjIyPpmvlr4g+MNeh0OXT9J1ZrK0SKPzLaFhia3J+Uqeq7T6YyD7Vsfs8T3EPg7V7Xz82IuRO1u3Ko+0ESKPUgMpH0r9Cw1P2VK+LSacltdWT0v5PbTXbe7PzKdWu6nJRfvJPfW73S6ea/4CPob4vaB4a+M2jK0OruniHTLXyrGza6jS3YlwTuL9yOCQR0H0r5f8TeAL/wAO6nc6Zf2wjlVgpaLa6tjoUccFTxyDyK+govA8mpRwSQQR3EVwm+Peu0OCMgg+9cv4s+H934d1FYp4ZLaQqJI1JyNp6YxX6RlM6eCisPCrzQ3Se69Hfa+u3Xc+AzRVMbJ4iVLll1a2frpvbz6bHzd4/t7TwP4WudcmAl+yNGfsUjbXlcuMLjuD39s0/wDY2/Zkn/aa8XzeLPGsbXOg+fJK4ckNfyFv3jk/88wflA6E57Lz03xx+HV54z8OQ6XBva6u9RtoTKowY1kkEbSE+i78n6V9x/s1eGdO8F6P/ZGmwJb2lnbR28MSDhUXj/8AXXwfG8p1MVTqP4YxXL6tu7+R9rwXCCw1SKWrlr6JKyCT9jL4FWFxLq958PvD6CBTNJPdxKIo1UZLNnCgADJJ4rofgzf/AAc1K51J/hbfeE7yaH93er4YuIm2ZbI8xIzjGRwxGOwPOK+a/wDgrb451nQfgR4c8PaW8sVr4j1kw6gYiR5sMMJlEJ9mfaxHfy6+af2V/wBtK41PxZ+z18ONK8FWGkHQNaXS7nX7Y4uNQtLlXhaN0C4XcXWR8s254kYYxX5zGhOpS9o3vf8AA+7nWUKnIkfsAjH1rL8XeIdI8MeHrrWNelig0yxCzPLLEZNrBgE2IAWZyxUKqgsWICgkirySNsJx8oGSx4FfLH/BRvx34n+HnwB0jxN4SOdS0vxVpd6CE8xCImkdNw6FfMWPI79K5acXOSgupvUahFyfQ9m+Gfxh8C/H3TdctdEupbo6bI2nazouqWUtneWm4FWjnt5QrqGXcAcYODzkED83vib4Aj+Hvj7xDoEfzxaXey28TSc5jDfIT/wErXb/APBOLxz46+MX7RPxC+IfiaFIrjVrWNr9reLyoSWRljQLztx9njIBJPyk5yTW3+09ol3B8d/FctxbPEtxOtxCJF4kjaJMOPUEg/iCO1frHAreHzGthHpzQT17pq34Nn5jxpH22Ao4pa8sradne/4pHimnaDpr202p65rEek6VCwEjqnm3MzEE7IYsje3HOSqqCCSMjPa/Db45nwxpmoaF4C8I3erRXrrJczajK8k0zJ90OsAVVUdQjMwBJOSea5HT/gjrnxR+Ieh6PpJLrfyrFP8A9O0YGZJfTaEU/jt65r9BPCHwD+HXhGGx8Gw6rFa6tBEt3DpllqK29zsX/lp5QO+RPVnBDd6+P49qZtj8fWy3FzcMOrcsY6c0f5pNau/bZbWurvDhHL6eIpfW4PltpfeTfVK+iS9Ls+Y3+JPj/U4Sb74ZWUkUg5SF0jkA9MMxrS0f4gaQZUs7+HUPB2py8LBqkZEEh9AzZjP04Nfc3/CE+HhEUXR7MKe3lCuM8ffA3SfEuhXlvpkNpaXcqYVL6MzWhP8A00j6kYzwCK/Dq3BWCnaVNuL9W/weh+n1MLCpCym7+aX6JHy9/wAK88MS3tm2qeFdGDWqiOyuobZfKCZ3BSuMIdxJAOQScg5OK6jW/ird/Bjwl4j1fRtGi1TVHt8xqW2EuOAGbGdvrjngfUY3ib4T+L/grZK9tCutaOwP2jS4XaSFfU2zSZYD/pi5I7A+vkOofFqw1iyvtMbzDFIv+jtLwUOfuNnnjtnntVxynGZdOFWPvW67q3X080fnOKxlbKMVaT5ZPZ9H/X5/I+dtV/aI1nx14jn1fxWV1O5nP7ydCwaNf7kakkKo/ujHuSea7ezsor61guYg3kyosq71KnBGRkHpWfoHwU0rU9du9WuJXuLVbgsNO2AICQGGWzkrz0GOmK9Rj0RZY8wqFfd1K88enYflX9jcGQzOnl6nmEl7OSTppJXS8+Wy17PXe5+cZvXpYqvz0rub1k3fX7/00MWTTbvwl4js5NW3hLIGDEi/6pc8Z+jD8Oa6ax1Sz8M3FxrmlFV0+6gK3FvCceXNklWK/wB0nKnHTIxXpHi610LxtqNzq3h+8vb8wbFvIr+1VZo3wf8AXIpIBIXr3+teZX+hW3hyWfV5U+xWdspNxFI+1UXPfPVT0718tLDRr0+eDutmtvk+qP0KljJUpqFRWf3/AHNaPsSyfH3xXZXWhwWd5Na+Go54pWii+85UgyRtJ1Cj+6CAetfXekTaZ8TtFkSV1OvW8e62LOQAhORuA4PXBIHoa+DNL+LXw91fU20iG4XTlnmBR7nMNuz9AGc8LjJwxxx1r2DS9a1DS7JA1wPIgjMAuLScZyBwY5UYgkqegPauKvh8Vh5wqU04qP8AX9eWh6NKtRmp0sRrzbf1v/kzt/i3Dpvhvzra4vbFNT094J7mzaUiORSQyAuvKdn45IU8c16z8IvGtgb+2vIp0msL+IMlyuQrK3IYe1fmp8V/iYvi641Ca31WO4tnhjiJuC2+Xy1KpvBJOQCQD1AOK5/4MftUeJfhbeS2dyTrehYVmsbq4O+MAKim3fnYQABsI2kDsea9PNMsrY3DQqTleTW1n/wf0JybFQwtapGELRv8/wAl+p+rP7QHw30z4++FpfCevWjmxW4S5tLq3x51vMuQsiE8HhmUjowYj3HJfBD9gTwZ8I/HWm+L5b6TWdU04mWyiNolvDFMVKiVgCxZ1BOOQATnkgY8U8C/8FNfDekxxQajoettZL8vmSQxsU+hD/pX0B4F/b1+D/jVQqeIpNKmPBj1S1kgwf8AeI2/rXwLwecYCjOjyy9nLeyuvyuj7jEVcsx1SnWSSnDzt96vZ/ic38Uf2jPHlgPGnh+y8KaNrFr9ru7K0mvwxH2fJQLJCDiTvzwCMZHXOn+yn4ou/wBob4Qa3oHjPwnotl4W0to9DTTrK3dI7l0VXdyC3yMrFOE6MS2c8VoeKT8L/FGpXfiCLxxZWFrM3m3bLJG0YY/ecMSAuepzkZ59qq2n7WvwN+FenWvhnw/4it9UuPMbyrLSR9olnmdss7uvy7mYklmIH0Ar5HB0MxeJlzJtLay1302XQ+tzKrk/1GmqCtNpc93ptru7a/dY9L8O/A7Qvhvpktj4Msk0m1uJftFzumdpJpAMB3diScKMAdBz6mvlv4w+IF+JXj251iGVbuwtYE061vEZiLqOMsWlGSQAXZgNoG5VVjknNexeKte8ZfFzSp7N7ddB0STKy6ZaXKy3NyvdJ5QRtU90j+90LEZB4FfCskavZvbiONG5Upggjjj0x+VfsnCuXzw2LlmWMnep0Td3ro2/lol5n4nxTmSxOChleDhakuqVlpsl5X1b8upu/sjaLNaeLtf1OO1MkFtphi80qdhleRSI93rtjOR1wRXxd8MP2ktctP2krnwjc+DLLUPGfiH4lWN3J4tuVJv7eKO5SGS3TjKxlFkXG4BVkddpB4+/vg4bn7Lqvhi2lSwmS5bUo9jFPtMLhUY9fvIygNtx99CeWzXRaV+zL4F0Dx3cfEOy0KCXxziW4jupXdoRdOhDTCLIAdsnJ/2iRgnNfK55jlis0xM8QnF7R67WS+TWp9LkuXrC5RhvYTUr3cujV7t9Oj0PYjMU/hIXsSOCK+b/ANqT9p3w18KPHXgfwP4h8VXngjS/EEF1fan4j09N09nBENsMcZ2PsMspIMgUlQhAwW3L5X8Ov20teutR8VeJJPhlLNBqLL5S22sSnY8Ue0qVlUoBuBJKKh7YbGa3P2x/2Np/2rbXwf4vsJ4bXV7XSlgubCeUxLJHJiZTG+DtZHZxhuoPUEc/JZfUoYqtyc6S7vRLe19D63NMJisBRVSpSeuqtZt2te1nruZX7Bf7UF98evEvxI+HfiDVp/GWk6M7Xmha9qUaLeXenNOYlW4KAKzgGJg2A3zMD0FcN+158CU8GeIbzXNHT9yQJrqIDO+Mj/W4H8S/xeoGeo59F/YV/Zu079maXxHqer3MS61qccdmrQvvgt7WNi/zvxl2YgscYAReetdp8TNcsPGPxP03TdQVW0S78uOS1Ztk91EUlZoyeBFvEZxk7iGUfKW46cRXwtGu6cppxemmzl5fP+rHzmY5f9bwcaOLhyylblvur7fP+mfKvwSsU1jSL3DbHEiBWc8S/KeVP8XOQcZxjnrXpFpoYsZWZbWK4yGPlyKdpJBG44I5Gc/UV9o+HtP0Txn8OrGxuLK3m0iS3WJraOBYkgwMbUVQAjJjgrjBXIrwXw1c6PoeiXUv9pw6tqLCW2YRKNw8uV49xPRdwTcRxnPFfqGT8Ux+p/V6sbOmklbqtvkfAYjhCeEqQ9nPmT3draryvrc8p+AOoL8Ok1TWbbS7ebU28uS4jXUGRiHjc8KpIcldxIYEgj1FcR+1Hq/xH+Ll81pqHhee78P21mjafBawNC808gzvllCAuI+MJuAyDkcmt22+Ix0PwrJqlx4X0BtP1qQXEQuLmRjcsszRBI183eCrK5wPlVeWYZxXU6Z+0J4x8Ialp+lWmnWlnfbo/I05biRpLozMVjKJ5rebypyQfl6njJHrUMlr0a06vuud7azWlt7drN2dl6mdbHqcIKlzKNk9Ib7b97paa+h+dvjHwzH4d1S7so7g3otn8lrnyjGryAASAA84DZAJ6gA4GcV1Xw8+Ll1p2nrpV5eGMxfLA7kBWXsjE+nbPb6V758U73wn8ddQmkvtG07w34ivJzJ/a+kRbVlnYhczpkh1OBkqQRyRnJz5J4g/Yr+J3h7XVsNa0aHTLV/MI1B7gSQ7UPzMNgJPrjAOK+mc6uAUY4uyk15NSXXbf+tDkjLDZnTkr6Re+zi/mc14sg1Px7q8CTyx3V1J8kK28AmuXX+6Noy345x64r279iD9ja0+MU03iDxbbzHw35hkt9NDhDdKjFRJI452lshVBwQCxzwK4n4reHfD37OvwTI8L659t8T+J4ms7q7G6K4ijH+sG3bhVPIADZ5JOTX2R8Nvi3Y/Az4UNqGnW0Fxo9po8M8Ii5BhjiBTbyM5B7nvXwWc4+tUpungo8q8tHrp5fh+R9Zk1GnH3q8uZdL7aa+f4v7mexav+xP8I9Z0V9Kj8GafpMbJt+0aYrRSqPdy3zn6jFfDn7T/AOxNf/szaba+JvDviOS+8IvJHbXUl2iiW2uHJCb0HHlscKGU5BIBHINeu/C//gp5omoeLde0fxH9kt7Z7Vr2wuYrh5CZMtugIWP7wG0gDOcEZzXOftl/tfyfEb4SX3g3wpZPf3etRWiNPDEwRSsyysyFiHZgUAwinGeTwa+MwGa5hl1VSjJyj1Ten+a+R9LjMBhMZSaaSb62V/8Ag/M+SrmTU54vst7p+mTrIgDs52pIp5GQRyOlWPh4NB8OfEDSbzXZftYguQfLsG8i1G3kBCvzOc45yBxwO9cH4lt/HfgfUNNfxZ4ZTSY9Utp3toTDFG5IXazBE5WRTg7WGTkccg19C+G/+CeHxk8a/C2x8WWQ03TtQvh9pHhS9naO6EJAKOXcbFdhzsJUgYyckgfUVuJXXp8lWnyt3vZ79ui/H1PmaOR+wlejO606ff1a18vQ/QbRfDul/ET4eQ694E1qaPXreH9/Ebx5TKo7sHJ5PGTXmuofETXPFFjcacl9bPqmjjzNQsII/IvlUEjzQnR045wexO2vg7wbr/xT/ZX+IVg9/p+q+G7y2lybfWIm2v2aLJ+WSNxkAqSCDjOea3viN49udI8Ur478Gm7i0+4jcGwuJmYJG+DLbB+oQHOMcjCntXzkMzdCrGV+ZX66/I9yeCVWlKMVyu3TT5n07rXizxXe6jZ6hHqd5b3OnN5kF+xRJY2AOTwMEEcENkMODmvRvCv7dmkaJFb23j2EWcu7b/a2lo0kDY/iePlo+2cbl56ivIvDv2nxt8LtB8c7/wDiSaqrRR3NqcR+YGKGCYt9yQMCMfdJ5U9hwnxd+DGsy2thHLaX+hx3kDGznkhK21zMZEVYt3UkozNyBwpIBAzX1GfvJpYH2/MnK3u8u6tvzeS8/kfm2W5xnGDxUsPUptW1le7j6r/NO3fWx9Y6NqfwW8ZavJfaL4rtGs5pDPNpltIoRS7bm4xuRWYk49zjFel6/wDtKfDTwtbM+oeL9KtkjBBTz1G3HbGeK/Pzw/8As/8AjXT9G1a/sdQ0tomCWMlw9ow3HLeX++GCOhGQM884yK5DWP2f9bm1bSYtbXSrOzu5/K2Wy+WGADNnPIPK888n1r8D/tjAUFKUFrq3/wADTU/Uo8Q47MJ4bD1Yau0Ve9km7ad/w7an1L4y/ar0b4jalFY+D4kXQ5JXkl1ERlWvFjxuVQeke8gFsfNtIHAOfGPi/wDEG7tp7G70y+EV4jBpSnzzYVt6N+Bzn1zXjdrrVz4TubjTrMJEbMyWSlMEACVjkfXNLpVte+J9bi09JFe7uAWERcByo6s2T8q+5wK8uhluPzbMo4iKvFfCl+Hp017/ACPgM5ziviMROk2+aLaXdWfTzPdfDn7UXijxSbPRtF0iOw1m7O25vBeN5Mcf8Uqw4+9jP3jjOPvdK7a+1K4jsorHToI4rOLCBppAAcHnOOSSRlieT+NQfCjwp4a+GmlpPNYvrmv3Kt9puxIyW9vCoyUjGQWJbaNxAyfQACql/wDEvwkbiZbzSdFUWsbGOO/vGUSE5ztXepkbjoO+PWv2aNTDZUowxt3UavZK/wCqLnmuLqRhCvUTk1sv+Arep5O3h29g0Gz0+bVpLmzghS5gtBbWktzBCxE6tvKGRIyz7thYAkt8pGc7WpaL4pvH1+5vfE1zA9vaQWWozRvawsts7OIkVlVTsYuwITG7dhs4wOK3eGtbttPtdT8YXk08V4YGnmj8yDythLNEjtuRdwVd8m3Oc7eCBDqV9oUNnYR2PiXUvNuoDc3kEp3AyygK0LupCqcA7mbdwy5wQyj965lOSXIr3d/cl3vv52187XPAUKsV8btZW96Pbt5X08jr7T4LDw5eahdXV4s40aa3jniN1GAkkuzyxxywBdM44GRmu58OeKNa8YRar4ftrl724SCe7h+03ihUmjwrHfIwVVKlgTkDHPpXnV9Z+D5herJ49u5Yy0k0cT3IkaSYPhJSQCCAoHHDsR8uBtzy2teKR4Q07xbeeE9Qu7kR+Hnka5nCtJEZZERlYrlQ21ge+CSCSVNYYzFe2wFdVtXytp8rVnZd79bhTwTjiqThtdXXMnpfyt0seF/tDeOdS8YazbRahBZ281gzwOmnX8d3Cz9S29CVzknjPQe9bPw4/aF8ceEfDkGkzWdj4g8MRRtCNNvoio8kjDRrKowF6nBBHJrX/Y/+AV78YfiVKY9Ke80K3JnIlT/RzcgDapY8HCszEey57A/b+seAj4faXS7mySBoP3bRBAFH4dMV+PrEc07Slrba/wDX9dD9Ip4blpJwjovL+v66nwDrn7RqWlobLwl4S0jwN0K3VovnSSKAcoSUwckk5PoK7r4I/CzxP8Vbi1ikvr3w/oGrlDe3chEup3+DkujMB5cWOm7I44Vq6/xx+zv4e1b4m6bdiyjihBa7ubWFQsMwTACsvuzLkjqAQa9K0HXLW08WC0g8Rf2Bq1qivEJUxBNuBHlyPtIA4/T8uOtR505teh1Up2kofefV/wCzx8DPhL8HBC2h+EbSPWycNrWo/wCl38rHv5zj5fogUe1fSRtLZ0EunuImzucEDafqP6iviaL4s+JPA6WT+JdDWe3kDM2qaXJmMKG+TjoWKjJAxkkAd8e8/Dv4y2niPTjc2shuraOVoHMilGSRfvKfXGe2R7185Vp1Irm3R70eSTtHR9hqfHr4TfE7xLrfw58TLBBqmn3j2NzoXjDThDHM4PytE0oMciuMMhVssrAgVyHxi+D/AMM/hy1hIPA/gddDuJowdOnsv3wUna9wEMoDhGaP5EjcsCc46jsfid8PLH4nNFq2kSW1h4gjVI5DdwCW21KBSSLa5TB3KNzbXwWjLEjIJFcjZWXi3wfe3DyxadoejxSiSy0t7uz1G209gBuEQuHjkjB64UgDsBXuZPQo1ZOpUlHT7Mna602dnr20e3TS/wAnn2MxGEUacKc3f7cFez13Sd7aa+q31snh34m2fhP4QeMrPWdE026m8H6ebmTRtCt4UsZEIbbaRLFlVfzUK7WG4b1b3rhv2hfi2t78OvA8VjCZpfFaWeo6bPc/O6wMY5WDtjiRAwQt1bfnucX/AB98XZvG8NzpWo+OPC2i6c6sJft88ECo5QqJQsUkkkjKSSFyoyFya4/4maT4f1z4XfDvw94b8QW2q2nhxraBNRjRZHKrCyn5TkDdtzj29qjOMG7SjSUb1E/dTuo6d7Jau7t0PMw9ermODqQhGScVZSmuVyu9rNt6Kyu92WbTxjqdt4aOjW22GApIhnSZxJGWbJKjlcDJGMdyciuG8daQ3jDQ7jRWuXs3ULLb3S/MIpB0IB+gBHcE16z4J/ZxvfFeiW+pWfiqzVXXDQmyXchB5DY9au6t+yLr5khuLfXNKluITmJmtXG0kEdA/vX4VHhrF0KjlG1/W/59PLbyPRrYbNq8KSkrqCXLqlZaemui130PzM+Idhrug+ItSsLuyNrJOCBJZSHbG+3G8OM/e4PODUf7NUKn4q+FBdSOVu5ms5pEO5nLKyg5784Nfb3j39iDxZHNNrD3dmyMQ832eM5ByMk/OSBjNcH+z58BNJ+H+mal4y13UUk8QaYJ57PTVtd9uxV2Vl3Z3K4AOG6LnocZr9eySjUpexnN25Gm7a/5/iTyYt0sTHE0FGc07NNLmeuvZP03fQ9c1Twzp/h/SL+eG5Z76OwZWDLtG0yIM9SDxj8a8ktNJ+zm+Gla5d6dA7CeeCOKGbLMyx/LvRm5LqMD1r2z4uwXcPw88ReVZzb3sfPi2Qk4jDpIzFuoGxWP4H0r5u0gaQNP0m/i8bx6bqM8EpvLeJpVaJmB8pfMUDAJ2B8k7QSwJ2nHRxJKOKzHnoN2ikn63fye5+cwp4hSg3o7X3to3bq1r19DR1zwfb2EcVxYaVpFwGdVktm02MHBONyH1GQcd8cUi+E10u0exvND8P3l/Fh1uhZKokUnILL26YIwO+PWqfhTWb/S7R0hiia8jIX98m7co6cnuORmvVrGwsfHmiBJrhLS7miMAkLdCwIwpOORz1/OvtaeHzHESVJV5L/t9/5/5/gfX5hmOBwdF4mpTXKt7Rvb7l/wxwvhDUvCOuW1lrdp4Q0DWNLnlMUkDW+PKZCQ6llIPDDB74wehrV+K+reFND8LXuoWHhseF9Jnh+0yWNtGqwGRMrJGScmTIwRk8b/AENZWsfBHxD+z3aafZ+GrO2fSijveWVyhMkzu4bzvNHDEJtQBe3qa89+NOsX/jT4R39nbQT2raVdJfXMZwd8TYRkBz8ykmM5H93nHNe7mEK9HDqpOTkvVuL9Nbb/ADPJyfMcNmNSUaOlns1aS9Va6f4H2t/wT30nQbf9nTQNT0fT7azlvpZ7hoIn3FDI5Yrk88AAY9F9q9g+J/iPwPb6Fqd14jurG0+yQuZJbkhJIsLnOTyK/Jj4I/tMeKP2Wbd7rQRZ+IdCvV81bCSV0Ng5PzRkEEAE8kD1zkHIq78Y/wBoHxf+3T4o8M+H7HRofD2mxyrbzzTzMkM0rZKtPIAVVVG4qvPPqcV+T+x9tV9rfT8V5H6ysQqVLktqvxINA+Ot542/aSF9ZpI3hu4tptNtIW43Io8zzyvYF0HX+EivoyTT/D2n+BL3XfEegXOuW8ztHMbIASW8GDvctuGF5PGecgYrsfhP/wAE3vD/AIR0Sa8n1+71LxPc2/lrfwjyrSBDglY0+8c4ALk5x0ArO+Kvwx8XeEls7SfTLW/8O6UY7826qXuppYmdsQjG1xIGUHOdoB4z1+jwM6eJmqU5aX9LrsjxcRGdBOqlrb1t6mdpGk3EniDVV+G/jSK4a3djd6BcT4ZdqbVTa4KFARGuduQFxnPX1fVfiJo/wg8Ex33iW4tLO4igEtzHbr5MbTEZdgp4VS2ee56ZJxXnnwWMPhPwhrev31tPBZx3EiadNqlskV/JbcNiQgA4aUuRu6DJ6V8K/GP4wXv7QHxBvobnV1svDaNItqX3FJZUU7W2rk5Y/KgxwGHqTXPjMPTp15U07xj97dvJdOvbbzOmjiZujGdvel9yX9feetfEn9vT4hfES9n074fiTRNIZjGL2UFS/uq//FZ+gr59+IOl/EO/sG1nxV4ra5trliR9s1Ex+aRgHZEcb8cfdBxWn4G+Ffiv4paNaJ4dZLCwtUKXFxJdC3Qy7iFUkkEkgE4HqapePfhB4s+D/iK3svGmlz2tzdRq8FzcnzVeM/d2uSQQf0zyK1rYKtRoKqoNRfXZfd+rPHo5nhq+KeGdZOot43u169u9jzx/CaxIkrXizxkBnMMbsQPY4wfzr7X/AGTPIutKtbbSbn+0LaHdPcW0FwGMHyFYyUJGBkkc8ksMDg1hfBDQfB2v6FqNtr3mWIW2Z7RLZVkEs2flD5+6vXOOhxjNYulard/CLx/JqejG106C4IguJpYg0YXIKMR/d3DDDt1HSvEwuNtN0rWbPbxWFtGNZu6jrZH1zq/i/wAQ+Area80a8ks5I1LGNiQpABPYjFep/AX9oK71HxlDYeKdf0y8h1CHybWWC7DCO4+8FIJ6OAwBGeVwcZr4H8efFnxj4ntZtJ1LURaxbTHOlraiGRuxVmJJ9iBjNcb4aupdE8RaTfvbNeWlpdw3E0SybHlRJFZlVuzEAgHtmrr4zC1Yctlfq+vy1PmJZtUp4mHsG+S+qe36n7mXE0FzCyOyNHINuM53A8Gvh3XdF1PR/H3iHT7R4oLKx1ZpQqruMqkLIqtuG0KSTnHXGOMmu40v9v74c/2TbSR6Hq1tdNIy/YY9Py0cY3YOVyOy557mviH4t/FbXviN8Ude8W21pfaDZ3kqGG380o6xqMJu29zjPfrXDgsfTwTlK8ZXWza/Q9PP8XCeGisPP3r/AGd7W1P0s0v4o63Do8E/inSNMe0Yt501vexlwCP+ebEjOCQRnv6GuHvfD/wFvg09z4BslllZmKQ2pUcEZPyttHXoPyr4a0/4weKhAkXn3N4XUCVLwJcCT80B/WvRtC+MfinVvsRv9F1e5FkrKklqrLEoIxjyyNv6+npXhVM9ownfE4dJX+zNbdXaVvwZwUcXHEQUJ++0vtwT19V/kSSaNp2mXkf+lwkSHgqd27PT8OD+VHiy/uPCHg3WNV0yEyXtpbm9s1aMkb0w/IHsD36GvfvD/wAPpdFsZbc/Z7/zRhmnO0g+oIjyOewqre/CWPUIriCWNVimUoxW6OAhGCu0x85yazyvj+vho/7TVlJ/4V+aPqK/A0cRFqaTvur6emrf6Hgdj+1vY/8ACIeF77xDaCXSNXt3muLe5XdamRJNkiKxOUcYQ5GDhxzWe9poHjBnvPBGqWhvJg6nQ7phgowO5Y25yCM5B7dc131j+xJ4XsvDE/h+STUL7SpJROsV3qAPkuBjKEQgjIwCOc7R3FLpf7JukeAdam8S6LfX1tfW8e+CEXAaGAJEygBfKBIwTwTkknnmv0Sv4r5TTwkoUaTqTaWjTim+t/iXzST89D4PCeFWLo4pVKVV0Um9VJT00srNp91vZfM+UPHf7MllqK3UWn6rceD9XRSX0zV42a1ncfwpMoyhP+0CPcV2Pww8M6l8LNGsfCniG1ieORn1CLVLLJRZ9y4RmPB+XaVPswr1bVvi1p2p6NLcX0KatIujveCMNvt2aJGeRMsufvcEcFcjmvOPC/xT8D+Nk+ywajceFb5wG+w3n723J+h5X8MivQ4crZfxRReIw37isnaVOTur625ZaN3t2uvTVzmePxuST9niabq0elSK12V+eGrVm+jaa18j6M+CvjfXPDiyHTPEAt3MpMlrqjlra9PUdThGxgcFfr2r6W0P4gaF8UrOXQtZsX0jV1UO1vcOAD/twycbuccdfXI5r4e8G2LeHxqSazqFnc6FdSoLcwT7vKJGBtbrgnHXpwOlej3kMsGgPaR3DTXGiv8AbLW5U58+zfCyKD6o21sA8BjX6fmeR0sZRjKcVGrZWatvbut1e2j1V97Kx+R5ZxPicvzGcYVXUw8pPR3ej10b1TV3dbeWzPNv+Ch/iu7+FfgT/hG4btGvdTPleZASf3bZBb2OxXGO26vgj4W6qPDHivRdXgiDtpM8N9LKwJVT5g+U9umB7nNfQ/7emoXniFfDF5c3MtwqbomZyW+bb8v5AGvm7RLWKy8NCeQs0k1z5QgU8ldvXHfk9/SvyaWFnGs6dTotf69T+gPrUalFVaf2mrf16Hpnxo0WTwn8TvEOk6RcC0srt0msVOdiI7eYr+g+QgZx0Ne3fAq81D9oD4aePPgz4tikuNXg0+bWvBt3ffNdRXVqhaW2D9SjoG46DGfSvn/4majN4otPBmtyXMMeoQWyafMqOBIrxrhGY5OQVVPTrjsa+nPgF8RNH0f4h/CSXS/DqNrcfiG2h/tG4mZrmS3lVrdotoO0Aq3J5OQKxp4uvPlpXun7u/b/AIczxOEw8YyryVnH3r26eXnZHzj8MdbS0kKzSf6TKmN4OGRx3H+HSun8Q6kmq6e8U5R2lDRycVxWt20Xh74j+K7FUSNrXWL2BEGMqFmYAA+2KmutWa4h+8Nwx1GMn1r5yrSUazsfRUqvNRV+p6x8PdIl8fW9pqF7NceUsKpfX0luZCHjzGcBe52A5PvX0v4F+EPgiOzS6s1TVFUDd58qkk84+XgKeetePfsOavb+X4otpohPBHJGwXedxGQSBngHJPXivqfXfFnhuxWRYNDlg0+IqrBbbeszMM9eSRnAJPQ1+N+IP154h/VpT5fd0jtrFNvTW9/MvL8tpRwqrJXd5dNkpNL8LdBlr8PbNbdxZ2cNlIRuwVUEDt93is+48IRecImSCby88SR7wT35xz3rds/Hmk3Ns80kFuGjuBEZbh2ToOgGeTzVSx+Ieg6tO1lZXQk1HLHykbHGf/rEV+Fp4tXdnpvvp+H6ne40FZXRzk3g8o2YtKsEUH5CoAwfwFF14XmMIURyDb/yzgmYAH6EiurOqvdxyPFp8tkG5QTEHGOOD6cZ/GoUF5MuHlERbuh3HJp/Wa0Xvt5sxdGFtBumeHviDp0enMPEMWoyx37z3S3jv5TwF0VIwAm/aEVpCC2S7lQwXBHLeHvCXxs0f+2zda5BLLc3Qe1lur7zUht8vwFMb7WG4cYwQo5450dB8E+KLHStLZ/F1xNqNjdGYLeytNEI/lUdU3Odin5WIGZGORxnVsvCGsWuqm+S7gaBbp7q3tfMlKxt8p2g+j7drZHAY8sa/cHVULxTi7/3fM/RaVCNXWUnG3mepy3HmKSI2Hccdqp3Ks4bKEMRghq8wu/BOrT30s41ZoGlnMivEZTsYtuEoGceaAdmPu7R+FSaToniDSZIANWZNPjbMtjCrFGHRtpYFuevXgk15UqELX5/wPT9nBL3Zq54r+3XHqHh74ZpqGhyz6fdK/2OZLRgEaCU7XBTGMnd196/O3SnntZU88zqsYwinkj8ew9q/TH9pLQdR1T4VaLoMFld6rcoYI3nUhizIFBLEkMScE9CTmvjXVfh5NYyPHeW0thMBnbOp5HToeetfq3B9ajRw04Sfvcz9WrK3nvc/HeLcXKjioRcfdcU/ndr06I4O18WazBCUgu50iP3hG/B/A9/evpP4KftKRMbCw1nyBqVsDEkdxmIXUbAqy7uMlgSCDz6e3z7q2gT2CjaqyZ6BP51jSxPGwR0JJ5/eAGv2TB5ri6NpUaja2s9VbsfmuKwGX5nS5cRTT81o7+p9Q/Hfw2PiB8PJo7dc3lo/wBot4yclsHgZ9xx+NeQ+D9CsNR/Z58QiW0Q67puv2kwYx4liieKRCM9QA4Tjpk+1cxo/i/X9DTbaahewwkcR7y0eP8AdbIrr/g34y0/T/FeuaTr87rpHim0eyvplIUxsx3RzEYxhJVRjjtmvUhXji8W6lWPK5pp9tdvxMK9N4TAKnQbkqbTXeyeq+78eh5BHpc91fJBIpxG5ZkJY5J/iyfz96+nf2MrL+3/ANpnwOZpFGmaJcPrVxdD+CG0heU7uw5UV5346+BPjbwn4tutDhspb6934tbqxiM0EoJGCjjggqcg9ea931fw1H+xr+z1rqa3KLb4r/EPTxp0enBgZtL0w/8AHxNIOqNNjYq+n0avBq4N4aUpVVZLb/P9T3IZhTxUIxoS5r727f1devofJGp64fEXiLXNVlHGo31xdk9/3khb+tRTXLpGpDZ7nNYUN4UyoIWLsB1x6VFdXs10yxx8M52gDqa+Yac5trqfVRtCKXY+8f8AgnX4cS78KeNNXng86CW8itIxnBO1WZiD+KfnX0hPptxaSjNqFt2cDEbEkJ3AO3734Yrmf2YfAZ+E3wW0PSpEi/tF0a+vYhMocSyfNgg45VQi49Qa9ITxLaXduLgMqo2QC+QR9RjIr8yzOtPEYqpJfDsvRK36XPv8DRjRwsIPR7v1bv8AqcdrFp4YtbPT5Z/B1zNqDNLLcEyCRbfYMiRzxvLKMBevsawrPV9MmU3Oh2kQyuZIY7N45T/sEhc5yeR713l352pwFo4IXBwUMhyH9CKfoXjDWfC8zR3t/bPC6Zt7BSB5fXPGNxz16jpX5hmGEyuUnKdd3W9ryv8Ahv8AM83EUsPKfNz6+h52fivdaX5j6jpd5pNru8lnvLdo0UY6AsAGz69OKv2fj6TW4FaxsJ7iHd5h2BcMSOCp75G3pXS+M/iJda/ZTWcF3p7zMv7xFtvNJQ9huJx6Zx3rzax1HxRDPZ2VjpNvFprYeOWM+SIk53KU6+mAOuT6V8/isDgZQ9pg3fvzPl/B2bv5fmedVXJ/DqXXy/r8CnB4S8SvDp0UPih7eC0mklRFaUHcduHZl27yD5jbGG3LBemTVnTPA3iI2HiCO+8Q+fcX4hFo0V1Mog8vJ3EnJA3FXKpjJQAkAmvNNJ+H8tppunRnX2E1nqLaiJBAcMzegLdR2zx6qa6nTbKa2ur27vdeW7kutShv/lj8pU8sjbGAGI6KvOOuc5r9eqpRWk1/4D5n1kLveP4+R6Be+Etf1D+1Vj8Vzwm8jeFHLtiIPMsjusf3VYKu0Y4G9umBmax0XX5fFtnrWsa6skVvAm+wsWkW3aVVIBCMOF+eQ5zknb0xWQ3j+ytlBmvI0VRyzSgAD1J9KwPG/wAWrfR9MMmnXlrcXfmoojaXCEE92/D8jXhuVaUlTjbXTZdT0oxpXu2dn8QNda3u9AcysbcalDvG4AZLAKMdSfYVvz6Lo2vxSwaja2l2JPvJcxhsjHqeleX6/wCMNN/se8luQ1/NZ3AvLq0sWidbdnA8pgzfNxuJxxgAYHaqmifFrQ7f4c2niSS4jup7eMW0wBOZ7pflMefqCc+nNebjsBVp8s4Xve2ia1/ydtH1PneKsNHC1KcpSTTTX3PX8fyJPHX7NPh7XrmePRpZNP1GUK6wBhJGOdo4PKryMnJ45xXiPxH/AGRPFXgGCW81GAT2gXzFubIedb7SeDvAyo7ZIFfVPgPVri+0G3vtct0jmvgLrakexYFblFUd9q456kmtKbwPpXie6kuWmKiGIxgrdGJPLIPy7M7T16EV7+S8Y1Mol7DENzt1326Lb8bn568so4h3hGzfb/L/AIY/NW+0OQFI40kUncVViQMD61yutWk8KB432Sx8qQePcEjsa/QjxF+zn4KvI3lNmkdvJ/y1gcxHjoPlP9O1cHqv7Imlakm6y1m4tEYbglwqzIR16jBNfseD40ynM6fNGTT9Nv1/Azp8P4yL5qLjNeuv4/5nzZ4D/a5+Inw50lrDRPEd5p0ap5QjKJL5Y9EZgcD09K828WePtZ8da1c6nrOoXWqX9y2+e6vJTJLIe2WPYdhX0prX7Dup3UrtZXmnXCjoys8LEfkQa5xv2IPF2WESR4HTbdx4/WvQq5zRxUUp4lNebt+djWhkrwc3KlheWT1dkt+ux86q3AAJJ9K9z/Zj0LwvYeNbTXPGMzJBakS20Bj3xPKD8pc/3R16ckAdM53LL9h/xhvD+XbptPBmvkx+QBr1Dwj+x7eWTQnXNfiSHIPkWCl29xuYAD8jXHUx2XxpSU61m1b3dWehTwmOlVi4UbpP7WiPqjTdes9WthJa3aTCRd8bryrg87gT1HPau20l/AmpRpBqFpqRugu5gnmTKxXB48oZHPqB0ryjQfB+m+G9Js7DTwYYrJdsTOdzD1Ppn8O9NXxjrXg64dormcQ4JEseVPAyNw6HvyfT3r87nOjNNJ6eZ9zNShG89DrrLwtdavrF9D4ZvJG0tHItodYnW3uJCCQ+xQN+wHu6jOQRXN6l4e07w7Pe33jDw9NZW2n20sv2yG6WVpXxlFChiwHzN69+Kpp8QLf4lG1h1W9jmhjuQIx5YE5Y8YVhggNnqORXS3GjaNIhCyLO80nlsLiVpySONqlsg9MY+vvX5PmmNwGDryhTg79eW6T/AK8tDwpRw+rpu7/A+atb/aH0fR5SPB2lTWkWd7tqD5Yd8ccnGfWuLv8A9oLxN4guGYah5BOSBDEF2j69a9f+If7Meja5czXemf8AEpuG3MYFJZJD24z8vbpXj+ufAjxRoMxWHyrlQQB5T/MBgYLA/wD1+lfVZZW4YxMFKCSqPfn3v6vT7j8/xUczpyafw/3dj//Z" alt="KOMARU AI ロゴ：月から来たウサギのキャラクター、ピョンとニンタロウ">
             </div>
-            <h1 class="brand-text">KOMARU AI<small>ゲーム作成AI・多機能AIプラットフォーム</small></h1>
+            <h1 class="brand-text">こうまるAI<small>ゲーム作成AI・多機能AIプラットフォーム</small></h1>
         </div>
         <div class="nav-divider"></div>
         <button class="menu-btn active" onclick="switchTab('game', this)" aria-label="ゲーム作成AI"><svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg> ゲーム作成AI</button>
         <button class="menu-btn" onclick="switchTab('voice', this)" aria-label="音声AI"><svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg> 音声AI</button>
-        <div class="sidebar-footer">🌙 ニュース・AIアート機能は別サービスに移行しました。ゲーム作成AI（チャット相談つき）は実際に動作します。</div>
+        <div class="sidebar-footer">
+            🌙 ニュース・AIアート機能は別サービスに移行しました。ゲーム作成AI（チャット相談つき）は実際に動作します。
+
+            <div class="variant-search" aria-label="ブランド名検索">
+                <input id="variantSearchInput" placeholder="検索: こうまる / koumaru / KOUMARU" onkeypress="if(event.key==='Enter'){doVariantSearch(this.value)}">
+                <div class="variant-buttons">
+                    <button type="button" onclick="runVariantSearch('こうまる')">ひらがな</button>
+                    <button type="button" onclick="runVariantSearch('こうまるAI')">ひらがな+AI</button>
+                    <button type="button" onclick="runVariantSearch('KOMARU')">英語大文字</button>
+                    <button type="button" onclick="runVariantSearch('koumaru')">romaji</button>
+                    <button type="button" onclick="clearVariantSearch()">クリア</button>
+                </div>
+                <div id="variantSearchResult" class="variant-result" aria-live="polite"></div>
+            </div>
+        </div>
     </div>
 
     <div class="main-content">
@@ -656,7 +688,7 @@
                 <div class="panel-header-icon game"><svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></div>
                 <div>
                     <h2>ゲーム作成AI</h2>
-                    <p class="panel-sub">KOMARU AIとチャットで相談しながら、ブラウザで遊べるミニゲームをその場で自動生成します。</p>
+                    <p class="panel-sub">こうまるAIとチャットで相談しながら、ブラウザで遊べるミニゲームをその場で自動生成します。</p>
                 </div>
             </div>
 
@@ -670,7 +702,7 @@
                 <div class="chat-container" id="chatBox">
                     <div class="message bot">
                     <div class="avatar"><img src="data:image/jpeg;base64,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" alt="KOMARU AI"></div>
-                        <div class="bubble-wrap"><div class="bubble">こんにちは！KOMARU AIです。作りたいゲームのイメージを一緒に考えましょう。相談がまとまったら「ゲームを作る」タブでゲーム化できます。</div></div>
+                        <div class="bubble-wrap"><div class="bubble">こんにちは！こうまるAIです。作りたいゲームのイメージを一緒に考えましょう。相談がまとまったら「ゲームを作る」タブでゲーム化できます。</div></div>
                     </div>
                 </div>
                 <div id="chatStatus" class="chat-status" aria-live="polite"></div>
@@ -721,7 +753,7 @@
             <div class="placeholder-card">
                 <svg class="icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
                 <h3>音声認識・読み上げ</h3>
-                <p>KOMARU AIが落ち着いた声で文章を読み上げたり、あなたの声を聴き取ります。（開発中）</p>
+                <p>こうまるAIが落ち着いた声で文章を読み上げたり、あなたの声を聴き取ります。（開発中）</p>
             </div>
         </div>
 
@@ -810,7 +842,7 @@
 
         /* ===== チャット機能（ゲーム作成AI内の「チャットで相談」タブ） ===== */
         const messages = [
-            { role: 'bot', text: 'こんにちは！KOMARU AIです。作りたいゲームのイメージを一緒に考えましょう。相談がまとまったら「ゲームを作る」タブでゲーム化できます。' }
+            { role: 'bot', text: 'こんにちは！こうまるAIです。作りたいゲームのイメージを一緒に考えましょう。相談がまとまったら「ゲームを作る」タブでゲーム化できます。' }
         ];
 
         function appendMessage(text, sender, isWarning = false) {
@@ -944,7 +976,7 @@
             errorBox.textContent = '';
             button.disabled = true;
             promptEl.disabled = true;
-            status.innerHTML = `<span class="icon-mark spin" style="width:16px;height:16px;"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAYABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDc+H2keJ/A+oSaX8M5oNe8H+Kbl1fTNVDCC2mZXQmZsHKiNeTj51AwNwU034neD9Wm+D3gy00DxBZ3+lpHHfxWWn2tyJYkmYphpJk+Zt8rN8+xvnzs2pmvNp31fUvFMetadZ3c1rZsdXvtHbVTptmiWkJZpnmUrIn3k+RT828nIya9Ns/iNF4a8PR+IvGfxat9Ok1q+Fyvh7U7Z76SyVAAqwSu5e4YK2xpZEYHaqkjnP22NqvD5jSrcyuuVytqnKzSbtpfldr9u70Pl8NF1cuqUrP7Sj3SunZX1tzK6XfstTf8T6To/wAPfD/g208T+Df7bg0yCOXTLJ2Rmvr6YZkuZZEYgrtTI+Y7fmYIx27Cs+S78fS6nZ6lpx0a48PzWjxy3WnR2sVxcXMMZMdq65YjbHOxQfLsXIQAGivmMsx2BVFvOKU602205OSaXVWgkl7191d9TjzDEYqFblwcnCKX/PqL/HX0tpb8XxPxI8MWGs+GrLUPCltazeJLO6im0+PVLnFtGFbkR5IKPgDuRk9K+b/i34l8VXnjrWvEfiHRNQ0zXJrRIBYLZvIvnoqhWgkjXZjfvkJJHLE/MSTRRXwnD+d42vVq4HES542unK7kvs25r3tZbbH32b5ZhcPiqdTDx5LxvaOkb8zbdtrtrffzPpzwpo+heCPg9oN1rOnafc3EdnFdXxW0Mri5cDJOMsDzjcV/h9KKKK/OK+S4fMMZiKtWUk+bpJrdJ/mzzc1xLwVZU6UI2suh/9k=" alt=""></span> KOMARU AIがゲームを考えています…`;
+            status.innerHTML = `<span class="icon-mark spin" style="width:16px;height:16px;"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAYABgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDc+H2keJ/A+oSaX8M5oNe8H+Kbl1fTNVDCC2mZXQmZsHKiNeTj51AwNwU034neD9Wm+D3gy00DxBZ3+lpHHfxWWn2tyJYkmYphpJk+Zt8rN8+xvnzs2pmvNp31fUvFMetadZ3c1rZsdXvtHbVTptmiWkJZpnmUrIn3k+RT828nIya9Ns/iNF4a8PR+IvGfxat9Ok1q+Fyvh7U7Z76SyVAAqwSu5e4YK2xpZEYHaqkjnP22NqvD5jSrcyuuVytqnKzSbtpfldr9u70Pl8NF1cuqUrP7Sj3SunZX1tzK6XfstTf8T6To/wAPfD/g208T+Df7bg0yCOXTLJ2Rmvr6YZkuZZEYgrtTI+Y7fmYIx27Cs+S78fS6nZ6lpx0a48PzWjxy3WnR2sVxcXMMZMdq65YjbHOxQfLsXIQAGivmMsx2BVFvOKU602205OSaXVWgkl7191d9TjzDEYqFblwcnCKX/PqL/HX0tpb8XxPxI8MWGs+GrLUPCltazeJLO6im0+PVLnFtGFbkR5IKPgDuRk9K+b/i34l8VXnjrWvEfiHRNQ0zXJrRIBYLZvIvnoqhWgkjXZjfvkJJHLE/MSTRRXwnD+d42vVq4HES542unK7kvs25r3tZbbH32b5ZhcPiqdTDx5LxvaOkb8zbdtrtrffzPpzwpo+heCPg9oN1rOnafc3EdnFdXxW0Mri5cDJOMsDzjcV/h9KKKK/OK+S4fMMZiKtWUk+bpJrdJ/mzzc1xLwVZU6UI2suh/9k=" alt=""></span> こうまるAIがゲームを考えています…`;
 
             try {
                 const raw = await postToWorker(buildGameWorkerMessage(idea));
@@ -994,7 +1026,7 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'komaru-game.html';
+            a.download = 'koumaru-game.html';
             document.body.appendChild(a);
             a.click();
             a.remove();
@@ -1006,6 +1038,86 @@
             const blob = new Blob([lastGameCode], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             window.open(url, '_blank');
+        }
+
+        /* ===== ページ内バリアント検索（ハイライト） ===== */
+        function runVariantSearch(q) {
+            document.getElementById('variantSearchInput').value = q;
+            doVariantSearch(q);
+        }
+
+        function clearVariantSearch() {
+            document.getElementById('variantSearchInput').value = '';
+            removeHighlights();
+            const res = document.getElementById('variantSearchResult');
+            if (res) res.textContent = '';
+        }
+
+        function doVariantSearch(query) {
+            removeHighlights();
+            if (!query || !query.trim()) return;
+            const q = query.trim();
+            const flags = /[\u3040-\u309F\u30A0-\u30FF]/.test(q) ? 'g' : 'gi';
+            const regex = new RegExp(escapeRegExp(q), flags);
+            let count = 0;
+
+            const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                    // skip script/style
+                    if (node.parentNode && (node.parentNode.closest && node.parentNode.closest('script,style'))) return NodeFilter.FILTER_REJECT;
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+
+            const textNodes = [];
+            let n;
+            while (n = walker.nextNode()) textNodes.push(n);
+
+            textNodes.forEach(textNode => {
+                const text = textNode.nodeValue;
+                let lastIndex = 0;
+                let match;
+                regex.lastIndex = 0;
+                const frag = document.createDocumentFragment();
+                let any = false;
+                while ((match = regex.exec(text)) !== null) {
+                    any = true;
+                    count++;
+                    const before = text.slice(lastIndex, match.index);
+                    if (before) frag.appendChild(document.createTextNode(before));
+                    const span = document.createElement('span');
+                    span.className = 'search-hit';
+                    span.textContent = match[0];
+                    frag.appendChild(span);
+                    lastIndex = match.index + match[0].length;
+                    // avoid infinite loops for zero-length matches
+                    if (match.index === regex.lastIndex) regex.lastIndex++;
+                }
+                if (any) {
+                    const after = text.slice(lastIndex);
+                    if (after) frag.appendChild(document.createTextNode(after));
+                    textNode.parentNode.replaceChild(frag, textNode);
+                }
+            });
+
+            const res = document.getElementById('variantSearchResult');
+            if (res) res.textContent = count ? `見つかった数: ${count}` : '見つかりませんでした';
+            if (count) {
+                const first = document.querySelector('.search-hit');
+                if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function removeHighlights() {
+            document.querySelectorAll('.search-hit').forEach(span => {
+                const txt = document.createTextNode(span.textContent);
+                span.parentNode.replaceChild(txt, span);
+            });
+        }
+
+        function escapeRegExp(s) {
+            return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         }
     </script>
 </body>
