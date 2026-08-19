@@ -716,8 +716,40 @@
             <!-- ゲーム生成ビュー -->
             <div id="gameview-build" class="game-view">
                 <div class="game-input-row">
-                    <textarea id="gamePrompt" placeholder="例：矢印キーで操作する、隕石を避けるゲームを作って"></textarea>
-                    <button id="gameGenBtn" onclick="generateGame()">ゲームを作る</button>
+                    <div style="flex:1; display:flex; flex-direction:column; gap:8px;">
+                        <textarea id="gamePrompt" placeholder="例：矢印キーで操作する、隕石を避けるゲームを作って"></textarea>
+                        <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap;">
+                            <label style="font-size:13px;color:var(--text-faint);">
+                                ジャンル
+                                <select id="gameGenre" style="margin-left:6px; padding:6px; border-radius:8px; border:1px solid var(--border); background:var(--surface);">
+                                    <option value="アクション（横スクロール／アスレチック）">アクション（横スクロール／アスレチック）</option>
+                                    <option value="トップダウン戦闘">トップダウン戦闘</option>
+                                    <option value="ドライブ／運転シミュ">ドライブ／運転シミュ</option>
+                                    <option value="シミュレーション（どうぶつの森風）">シミュレーション（どうぶつの森風）</option>
+                                    <option value="対戦アクション（スマブラ風）">対戦アクション（スマブラ風）</option>
+                                    <option value="サンドボックス（マインクラフト風）">サンドボックス（マインクラフト風）</option>
+                                    <option value="FPS／サバイバルシューティング">FPS／サバイバルシューティング</option>
+                                </select>
+                            </label>
+                            <label style="font-size:13px;color:var(--text-faint);">
+                                複雑さ
+                                <select id="gameComplexity" style="margin-left:6px; padding:6px; border-radius:8px; border:1px solid var(--border); background:var(--surface);">
+                                    <option value="simple">シンプル（数分で遊べる）</option>
+                                    <option value="medium" selected>中位（複数ステージ・敵・得点）</option>
+                                    <option value="complex">高度（AI敵、レベル・セーブ、物理）</option>
+                                </select>
+                            </label>
+                            <label style="font-size:13px;color:var(--text-faint);">
+                                難易度
+                                <select id="gameDifficulty" style="margin-left:6px; padding:6px; border-radius:8px; border:1px solid var(--border); background:var(--surface);">
+                                    <option value="easy">かんたん</option>
+                                    <option value="normal" selected>ふつう</option>
+                                    <option value="hard">むずかしい</option>
+                                </select>
+                            </label>
+                            <button id="gameGenBtn" onclick="generateGame()">ゲームを作る</button>
+                        </div>
+                    </div>
                 </div>
                 <p class="game-hint">チャットタブでの相談内容も参考にしてゲームを作ります。キーボードかマウスで遊べるシンプルなゲームが得意で、生成には数十秒かかることがあります。</p>
 
@@ -929,14 +961,21 @@
         let gameCodeVisible = false;
 
         function buildGameWorkerMessage(idea) {
+            // UI の選択肢（ジャンル・複雑さ・難易度）を参照してプロンプトを強化
+            const genre = document.getElementById('gameGenre')?.value || 'アクション';
+            const complexity = document.getElementById('gameComplexity')?.value || 'medium';
+            const difficulty = document.getElementById('gameDifficulty')?.value || 'normal';
+
             const instructions = [
                 'あなたはブラウザで動くミニゲームを作るAIです。',
                 '出力は説明文やコードブロック記号（```）を含めず、<!DOCTYPE html>から始まる1つの完全なHTMLファイルのコードのみにしてください。',
-                '外部ファイル・外部CDN・外部フォント・外部画像は一切使わず、すべてそのHTML内のstyleタグとscriptタグだけで完結させてください。',
-                'canvas要素を使い、幅・高さは概ね480〜560px程度にしてください。',
-                '操作はキーボード（矢印キー等）またはマウス／クリックのみで実装してください。',
-                '画面内に簡単な操作説明とスコア表示を入れてください。',
-                'ゲームが安全に何度でも実行できるように、外部通信やページ全体を壊すコードは書かないでください。'
+                '外部ファイル・CDNは使わないでください。ただし、小さなアイコンや効果音はデータURI（base64）で埋め込むことを許可します。',
+                'canvas または DOM を使い、表示サイズは可変にしてデスクトップとモバイル両方で動くようにしてください（推奨 幅480〜800px）。',
+                '操作はキーボード（矢印/WASD）やマウスで使えるようにし、画面内に操作説明、スコア表示、ポーズ／リスタートを必ず入れてください。',
+                '複数ステージや敵の種類、簡単な敵AI（追跡・パターン）を実装してください。選択された複雑さ(simple/medium/complex)に応じて機能を増やしてください。',
+                'ランダム要素は再現できるようにシード（固定値）を使ってください。コードは読みやすく関数で分け、短いコメントをつけてください。',
+                '外部通信は行わないでください（ローカルStorage を使った簡易セーブは可）。',
+                'ユーザーが選んだジャンル: ' + genre + '、複雑さ: ' + complexity + '、難易度: ' + difficulty + ' を反映してください.'
             ].join('\n');
 
             const pairs = getRecentChatPairs(4);
