@@ -660,9 +660,69 @@
         .variant-buttons button:hover { color:var(--text); border-color:var(--accent); }
         .variant-result { margin-top:8px; font-size:12px; color:var(--text-faint); }
         .search-hit { background: #fff3b0; border-radius:3px; padding:0 2px; }
+
+        /* ===== ログイン画面 ===== */
+        .login-page { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 28px 18px; overflow-y: auto; background: linear-gradient(160deg, #dff5ff 0%, #f7fbff 58%, #ffffff 100%); }
+        .login-page::before { content: ""; position: absolute; width: 560px; height: 560px; top: -270px; left: -180px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 70%); }
+        .login-layout { position: relative; z-index: 1; width: min(1040px, 100%); display: grid; grid-template-columns: minmax(260px, 1fr) minmax(320px, 470px); align-items: center; gap: clamp(32px, 8vw, 96px); }
+        .login-intro { padding: 20px; color: #15558c; }
+        .login-logo-mark { width: 78px; height: 78px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; border: 4px solid #35a8df; border-radius: 26px; background: #ffffff; font-size: 40px; box-shadow: 0 10px 30px rgba(30, 140, 200, .18); }
+        .login-intro h1 { margin: 0; font-family: var(--font-display); font-size: clamp(38px, 6vw, 64px); line-height: 1; letter-spacing: .02em; }
+        .login-intro h1 span { color: #13b9e8; }
+        .login-intro p { max-width: 360px; margin: 16px 0 0; color: #52799a; font-size: 17px; line-height: 1.8; }
+        .login-card { width: 100%; padding: clamp(28px, 5vw, 42px); border: 1px solid rgba(102, 188, 229, .35); border-radius: 24px; background: rgba(255, 255, 255, .96); box-shadow: 0 20px 60px rgba(48, 133, 176, .18); }
+        .login-card h2 { margin: 0; color: #174f80; text-align: center; font-size: 34px; }
+        .login-card .login-description { margin: 10px 0 24px; color: #52799a; text-align: center; line-height: 1.7; }
+        .login-field { margin-bottom: 13px; }
+        .login-field input { width: 100%; height: 56px; padding: 0 16px; border: 1px solid #cbdfea; border-radius: 12px; color: #244d6d; font-size: 16px; outline: none; }
+        .login-field input:focus { border-color: #20a8e5; box-shadow: 0 0 0 3px rgba(32, 168, 229, .10); }
+        .login-password { position: relative; }
+        .login-password input { padding-right: 52px; }
+        .login-password button { position: absolute; top: 7px; right: 7px; width: 42px; height: 42px; border: 0; border-radius: 50%; background: transparent; color: #3975a3; cursor: pointer; }
+        .login-password button:hover { background: #eef9ff; }
+        .login-primary, .login-google, .login-register { width: 100%; cursor: pointer; font-size: 16px; }
+        .login-primary { height: 56px; margin-top: 4px; border: 0; border-radius: 30px; background: linear-gradient(90deg, #2196f3, #13b9e8); color: #ffffff; font-weight: 700; }
+        .login-primary:hover { transform: translateY(-1px); box-shadow: 0 10px 25px rgba(30, 150, 230, .25); }
+        .login-divider { display: flex; align-items: center; gap: 12px; margin: 22px 0 18px; color: #9aafbd; font-size: 14px; }
+        .login-divider::before, .login-divider::after { content: ""; flex: 1; height: 1px; background: #dce7ed; }
+        .login-google { height: 54px; border: 1px solid #d1dfe7; border-radius: 28px; background: #ffffff; color: #365b76; }
+        .login-google:hover { background: #f7fcff; border-color: #b8d5e3; }
+        .login-google strong { margin-right: 8px; color: #4285f4; font-size: 21px; }
+        .login-register { height: 46px; margin-top: 12px; border: 0; background: transparent; color: #168ee0; font-weight: 700; }
+        .login-message { min-height: 20px; margin: 14px 0 0; color: #1775a8; font-size: 14px; text-align: center; }
+        @media (max-width: 720px) {
+            .login-layout { grid-template-columns: 1fr; gap: 18px; max-width: 470px; }
+            .login-intro { padding: 0; text-align: center; }
+            .login-logo-mark { width: 64px; height: 64px; margin: 0 auto 12px; font-size: 32px; }
+            .login-intro p { margin: 10px auto 0; font-size: 15px; }
+        }
     </style>
 </head>
 <body>
+
+    <section id="loginPage" class="login-page" aria-label="ログイン">
+        <div class="login-layout">
+            <div class="login-intro">
+                <div class="login-logo-mark" aria-hidden="true">🐱</div>
+                <h1>こうまる <span>AI</span></h1>
+                <p>あなたの「知りたい」「やりたい」を、AIで。<br>ログインしてゲーム作成AIを始めましょう。</p>
+            </div>
+            <form id="loginForm" class="login-card">
+                <h2>ログイン</h2>
+                <p class="login-description">こうまるAIのすべての機能を使えます。</p>
+                <div class="login-field"><input id="loginEmail" type="email" placeholder="メールアドレス" autocomplete="username" required></div>
+                <div class="login-field login-password">
+                    <input id="loginPassword" type="password" placeholder="パスワード" autocomplete="current-password" required>
+                    <button id="toggleLoginPassword" type="button" aria-label="パスワードを表示">表示</button>
+                </div>
+                <button class="login-primary" type="submit">ログイン</button>
+                <div class="login-divider"><span>または</span></div>
+                <button id="loginGoogle" class="login-google" type="button"><strong>G</strong>Googleでログイン</button>
+                <button id="loginRegister" class="login-register" type="button">新規登録</button>
+                <p id="loginMessage" class="login-message" aria-live="polite"></p>
+            </form>
+        </div>
+    </section>
 
     <div class="sidebar">
         <div class="brand">
@@ -1185,7 +1245,7 @@
     </script>
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCaA25DRhc6ySr7-O8MU-guGnMqAkq8gbk",
@@ -1205,6 +1265,47 @@
         const userProfile = document.getElementById('user-profile');
         const userNameEl = document.getElementById('user-name');
         const userAvatarImg = document.querySelector('#user-avatar img');
+        const loginPage = document.getElementById('loginPage');
+        const loginForm = document.getElementById('loginForm');
+        const loginEmail = document.getElementById('loginEmail');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginMessage = document.getElementById('loginMessage');
+        const loginGoogle = document.getElementById('loginGoogle');
+        const loginRegister = document.getElementById('loginRegister');
+        const toggleLoginPassword = document.getElementById('toggleLoginPassword');
+
+        function setLoginMessage(message) { loginMessage.textContent = message; }
+
+        toggleLoginPassword.addEventListener('click', () => {
+            const isPassword = loginPassword.type === 'password';
+            loginPassword.type = isPassword ? 'text' : 'password';
+            toggleLoginPassword.textContent = isPassword ? '隠す' : '表示';
+        });
+
+        loginForm.addEventListener('submit', async event => {
+            event.preventDefault();
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            if (!email || !password) return;
+            setLoginMessage('ログインしています…');
+            try { await signInWithEmailAndPassword(auth, email, password); }
+            catch (e) { console.error('Email sign-in error', e); setLoginMessage('ログインできませんでした。入力内容を確認してください。'); }
+        });
+
+        loginGoogle.addEventListener('click', async () => {
+            setLoginMessage('Googleログインを開始しています…');
+            try { await signInWithPopup(auth, provider); }
+            catch (e) { console.error('Sign-in error', e); setLoginMessage('Googleログインに失敗しました。'); }
+        });
+
+        loginRegister.addEventListener('click', async () => {
+            const email = loginEmail.value.trim();
+            const password = loginPassword.value;
+            if (!email || password.length < 6) { setLoginMessage('メールアドレスと6文字以上のパスワードを入力してください。'); return; }
+            setLoginMessage('アカウントを作成しています…');
+            try { await createUserWithEmailAndPassword(auth, email, password); }
+            catch (e) { console.error('Account creation error', e); setLoginMessage('アカウントを作成できませんでした。'); }
+        });
 
         loginBtn.addEventListener('click', async () => {
             try {
@@ -1221,11 +1322,13 @@
 
         onAuthStateChanged(auth, user => {
             if (user) {
+                loginPage.style.display = 'none';
                 userNameEl.textContent = user.displayName || user.email || 'ユーザー';
                 userAvatarImg.src = user.photoURL || '';
                 userProfile.style.display = 'flex';
                 loginBtn.style.display = 'none';
             } else {
+                loginPage.style.display = 'flex';
                 userProfile.style.display = 'none';
                 loginBtn.style.display = 'flex';
             }
